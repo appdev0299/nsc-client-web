@@ -1,0 +1,56 @@
+/* Custom styles for react-day-picker v9 */
+
+.rdp-root {
+  --rdp-accent-color: #4f46e5;
+  /* Primary 600 */
+  --rdp-background-color: #e0e7ff;
+  /* Primary 100 */
+  margin: 0;
+}
+
+/* Remove default gray background from month container if present */
+.rdp-month {
+  background-color: transparent;
+}
+
+.rdp-caption_label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  /* Neutral 900 */
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .rdp-caption_label {
+    color: #f3f4f6;
+    /* Neutral 100 */
+  }
+}
+
+/* Selected Day Styling */
+.rdp-day_selected:not([aria-disabled="true"]) {
+  background-color: var(--rdp-accent-color) !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Today's Date */
+.rdp-day_today {
+  color: var(--rdp-accent-color);
+  font-weight: bold;
+}
+
+/* Hover effects */
+.rdp-day:hover:not([aria-disabled="true"]):not(.rdp-day_selected) {
+  background-color: #f3f4f6;
+  /* Neutral 100 */
+  border-radius: 50%;
+}
+
+/* Container adjustments */
+.custom-datepicker-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

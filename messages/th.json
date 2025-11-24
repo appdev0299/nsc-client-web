@@ -1,0 +1,86 @@
+{
+    "nav": {
+        "services": "บริการ",
+        "healthKnowledge": "ความรู้ด้านสุขภาพ",
+        "aboutUs": "เกี่ยวกับเรา",
+        "communityClinic": "คลินิกพยาบาลชุมชนอบอุ่น",
+        "mentalHealthClinic": "คลินิกใจสบาย",
+        "familyClinic": "คลินิกครอบครัวอุ่นสุข",
+        "appointment": "นัดหมาย",
+        "findSpecialist": "ค้นหาผู้เชี่ยวชาญ",
+        "packages": "แพ็กเกจ",
+        "generalInfo": "ข้อมูลทั่วไป",
+        "clinicInfo": "ข้อมูลคลินิก",
+        "partnerships": "ความร่วมมือ",
+        "careers": "การรับสมัคร",
+        "contact": "ติดต่อเรา",
+        "news": "ข่าวสาร"
+    },
+    "common": {
+        "loading": "กำลังโหลด...",
+        "search": "ค้นหา",
+        "viewAll": "ดูทั้งหมด",
+        "viewProfile": "ดูโปรไฟล์",
+        "bookNow": "จองเลย",
+        "readMore": "อ่านเพิ่มเติม",
+        "learnMore": "เรียนรู้เพิ่มเติม",
+        "submit": "ส่ง",
+        "cancel": "ยกเลิก",
+        "save": "บันทึก",
+        "edit": "แก้ไข",
+        "delete": "ลบ",
+        "confirm": "ยืนยัน",
+        "back": "กลับ",
+        "next": "ถัดไป",
+        "previous": "ก่อนหน้า",
+        "close": "ปิด"
+    },
+    "home": {
+        "hero": {
+            "title": "ยินดีต้อนรับสู่ศูนย์พยาบาล",
+            "subtitle": "บริการดูแลสุขภาพครบวงจร"
+        },
+        "packages": {
+            "title": "สำรวจแพ็กเกจของเรา",
+            "subtitle": "ค้นพบแพ็กเกจสุขภาพที่ครอบคลุมของเรา"
+        },
+        "trending": {
+            "title": "หัวข้อยอดนิยม",
+            "subtitle": "ค้นพบกว่า 112 หัวข้อ"
+        }
+    },
+    "packages": {
+        "title": "แพ็กเกจทั้งหมด",
+        "searchPlaceholder": "ค้นหาแพ็กเกจ...",
+        "allClinics": "คลินิกทั้งหมด",
+        "found": "พบ {count} แพ็กเกจ",
+        "noResults": "ไม่พบแพ็กเกจ"
+    },
+    "specialists": {
+        "title": "ค้นหาผู้เชี่ยวชาญ",
+        "searchPlaceholder": "ค้นหาตามชื่อ, ความเชี่ยวชาญ, หรือคลินิก...",
+        "allSpecialists": "ผู้เชี่ยวชาญทั้งหมด",
+        "doctors": "แพทย์",
+        "nurses": "พยาบาล",
+        "found": "พบ {count} ผู้เชี่ยวชาญ"
+    },
+    "clinic": {
+        "aboutUs": "เกี่ยวกับเรา",
+        "ourPackages": "แพ็กเกจสุขภาพของเรา",
+        "contactInfo": "ข้อมูลติดต่อ",
+        "address": "ที่อยู่",
+        "phone": "โทรศัพท์",
+        "email": "อีเมล",
+        "openingHours": "เวลาทำการ",
+        "location": "สถานที่",
+        "rating": "คะแนน",
+        "noPackages": "ไม่มีแพ็กเกจที่คลินิกนี้",
+        "notFound": "ไม่พบคลินิก"
+    },
+    "footer": {
+        "services": "บริการ",
+        "aboutUs": "เกี่ยวกับเรา",
+        "healthKnowledge": "ความรู้ด้านสุขภาพ",
+        "healthArticles": "บทความสุขภาพ"
+    }
+}

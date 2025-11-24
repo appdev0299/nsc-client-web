@@ -1,0 +1,86 @@
+{
+    "nav": {
+        "services": "Services",
+        "healthKnowledge": "Health Knowledge",
+        "aboutUs": "About Us",
+        "communityClinic": "Community Nursing Clinic",
+        "mentalHealthClinic": "Mental Health Clinic",
+        "familyClinic": "Family Care Clinic",
+        "appointment": "Appointment",
+        "findSpecialist": "Find a Specialist",
+        "packages": "Packages",
+        "generalInfo": "General Information",
+        "clinicInfo": "Clinic Information",
+        "partnerships": "Partnerships",
+        "careers": "Careers",
+        "contact": "Contact Us",
+        "news": "News"
+    },
+    "common": {
+        "loading": "Loading...",
+        "search": "Search",
+        "viewAll": "View All",
+        "viewProfile": "View Profile",
+        "bookNow": "Book Now",
+        "readMore": "Read More",
+        "learnMore": "Learn More",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "save": "Save",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirm": "Confirm",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "close": "Close"
+    },
+    "home": {
+        "hero": {
+            "title": "Welcome to Nursing Center",
+            "subtitle": "Comprehensive Healthcare Services"
+        },
+        "packages": {
+            "title": "Explore our packages",
+            "subtitle": "Discover our comprehensive health packages"
+        },
+        "trending": {
+            "title": "Top trending topics",
+            "subtitle": "Discover over 112 topics"
+        }
+    },
+    "packages": {
+        "title": "All Packages",
+        "searchPlaceholder": "Search packages...",
+        "allClinics": "All Clinics",
+        "found": "Found {count} packages",
+        "noResults": "No packages found"
+    },
+    "specialists": {
+        "title": "Find a Specialist",
+        "searchPlaceholder": "Search by name, specialty, or clinic...",
+        "allSpecialists": "All Specialists",
+        "doctors": "Doctors",
+        "nurses": "Nurses",
+        "found": "Found {count} specialists"
+    },
+    "clinic": {
+        "aboutUs": "About Us",
+        "ourPackages": "Our Health Packages",
+        "contactInfo": "Contact Information",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "openingHours": "Opening Hours",
+        "location": "Location",
+        "rating": "Rating",
+        "noPackages": "No packages available at this clinic.",
+        "notFound": "Clinic not found"
+    },
+    "footer": {
+        "services": "Services",
+        "aboutUs": "About Us",
+        "healthKnowledge": "Health Knowledge",
+        "healthArticles": "Health Articles"
+    }
+}

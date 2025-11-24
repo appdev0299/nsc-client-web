@@ -1,0 +1,94 @@
+import { TPost } from '@/data/posts'
+import clsx from 'clsx'
+import Image from 'next/image'
+import Link from 'next/link'
+import { FC } from 'react'
+import CategoryBadgeList from '../CategoryBadgeList'
+import PostCardMeta3 from '../PostCardMeta/PostCardMeta3'
+import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
+import ClinicMiniProfile from '../ClinicMiniProfile'
+
+interface Props {
+  className?: string
+  post: TPost
+  hoverClass?: string
+  ratio?: string
+  isPackage?: boolean
+}
+
+const Card7: FC<Props> = ({ className, ratio = 'aspect-3/4', post, hoverClass, isPackage = false }) => {
+  const {
+    title,
+    handle,
+    featuredImage,
+    categories,
+    author,
+    date,
+    readingTime,
+    postType,
+  } = post
+  // Find price category (used only for packages)
+  const priceCategory = categories.find((c) => c.id === 'price')
+  // Filter out price category from normal list when rendering as badge
+  const otherCategories = categories.filter((c) => c.id !== 'price')
+
+  // Determine the link URL based on whether this is a package or post
+  const linkUrl = isPackage ? `/packages/${handle}` : `/post/${handle}`
+
+  return (
+    <div
+      className={clsx('group post-card-7 relative flex flex-col overflow-hidden rounded-3xl', hoverClass, className)}
+    >
+      <div className={clsx('relative w-full', ratio)}>
+        <Link href={linkUrl} className="absolute inset-0" />
+        <Image
+          fill
+          alt={title}
+          sizes="(max-width: 600px) 480px,800px"
+          className="size-full rounded-3xl object-cover"
+          src={featuredImage}
+        />
+        <PostTypeFeaturedIcon
+          className="absolute start-3 top-3 group-hover:hidden"
+          postType={postType}
+          wrapSize="size-7"
+          iconSize="size-4"
+        />
+        <span className="absolute inset-0 bg-neutral-900/20 opacity-0 transition-opacity group-hover:opacity-100"></span>
+      </div>
+
+      <div className="absolute inset-x-3 bottom-3 flex grow flex-col rounded-3xl bg-white p-4 transition-shadow group-hover:shadow-2xl dark:bg-neutral-900">
+        <Link href={linkUrl} className="absolute inset-0"></Link>
+        <div className="mb-3 space-y-2.5">
+          {/* Render price as plain text for packages */}
+          {isPackage && priceCategory ? (
+            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              {priceCategory.name}
+            </p>
+          ) : (
+            <CategoryBadgeList categories={otherCategories} />
+          )}
+          <h2 className="block text-base font-semibold text-neutral-900 dark:text-neutral-100">
+            <Link href={linkUrl} title={title} className="line-clamp-2">
+              {title}
+            </Link>
+          </h2>
+        </div>
+
+        {/* Use ClinicMiniProfile for packages, PostCardMeta3 for regular posts */}
+        {isPackage ? (
+          <ClinicMiniProfile
+            clinicId={author.id}
+            clinicName={author.name}
+            clinicAvatar={author.avatar.src}
+            isPackage={true}
+          />
+        ) : (
+          <PostCardMeta3 readingTime={readingTime} date={date} author={author} />
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default Card7
