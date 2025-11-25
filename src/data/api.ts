@@ -40,11 +40,11 @@ export async function getPostsFromApi(): Promise<TPost[]> {
             postType: item.postType || 'standard',
             status: 'published',
             content: item.content || '',
-            featuredImage: item.featuredImage || {
-                src: getValidImageUrl(item.imageUrl),
-                alt: item.title || 'Post Image',
-                width: 1920,
-                height: 1080
+            featuredImage: {
+                src: getValidImageUrl(item.featuredImage?.src || item.imageUrl),
+                alt: item.featuredImage?.alt || item.title || 'Post Image',
+                width: item.featuredImage?.width || 1920,
+                height: item.featuredImage?.height || 1080
             },
             author: {
                 id: item.author?.id || 'admin',

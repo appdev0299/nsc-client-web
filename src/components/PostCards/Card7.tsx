@@ -62,7 +62,7 @@ const Card7: FC<Props> = ({ className, ratio = 'aspect-3/4', post, hoverClass, i
         <div className="mb-3 space-y-2.5">
           {/* Render price as plain text for packages */}
           {isPackage && priceCategory ? (
-            <p className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+            <p className="text-lg font-bold text-primary-600 dark:text-primary-500">
               {priceCategory.name}
             </p>
           ) : (
@@ -76,13 +76,11 @@ const Card7: FC<Props> = ({ className, ratio = 'aspect-3/4', post, hoverClass, i
         </div>
 
         {/* Use ClinicMiniProfile for packages, PostCardMeta3 for regular posts */}
+        {/* Use ClinicMiniProfile for packages, PostCardMeta3 for regular posts */}
         {isPackage ? (
-          <ClinicMiniProfile
-            clinicId={author.id}
-            clinicName={author.name}
-            clinicAvatar={author.avatar.src}
-            isPackage={true}
-          />
+          <div className="flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+            <span>{author.name}</span>
+          </div>
         ) : (
           <PostCardMeta3 readingTime={readingTime} date={date} author={author} />
         )}

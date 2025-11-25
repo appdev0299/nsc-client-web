@@ -1,53 +1,60 @@
-import { CustomLink } from '@/data/types'
+'use client'
+
 import Logo from '@/shared/Logo'
 import SocialsList1 from '@/shared/SocialsList1'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 export interface WidgetFooterMenu {
   id: string
-  title: string
-  menus: CustomLink[]
+  titleKey: string
+  menus: {
+    href: string
+    labelKey: string
+  }[]
 }
 
 const widgetMenus: WidgetFooterMenu[] = [
   {
     id: '1',
-    title: 'บริการ',
+    titleKey: 'footer.services',
     menus: [
-      { href: '/clinics/bd2a07b5-d294-4604-b78f-c7aa21ce293c', label: 'คลินิกพยาบาลชุมชนอบอุ่น' },
-      { href: '/clinics/b2cd8439-1224-47a2-9a88-1cf0a02628b2', label: 'คลินิกใจสบาย' },
-      { href: '/clinics/804f5d20-5e79-45c6-8565-12963dc065f9', label: 'คลินิกครอบครัวอุ่นสุข' },
-      { href: '/appointment', label: 'นัดหมาย' },
-      { href: '/find-expert', label: 'ค้นหาผู้เชี่ยวชาญ' },
-      { href: '/packages', label: 'แพ็กเกจ' },
+      { href: '/clinics/bd2a07b5-d294-4604-b78f-c7aa21ce293c', labelKey: 'nav.clinicWarm' },
+      { href: '/clinics/b2cd8439-1224-47a2-9a88-1cf0a02628b2', labelKey: 'nav.clinicComfortable' },
+      { href: '/clinics/804f5d20-5e79-45c6-8565-12963dc065f9', labelKey: 'nav.clinicFamilyWarm' },
+      { href: '/appointment', labelKey: 'nav.appointment' },
+      { href: '/find-expert', labelKey: 'nav.findSpecialist' },
+      { href: '/packages', labelKey: 'nav.packages' },
     ],
   },
   {
     id: '2',
-    title: 'เกี่ยวกับเรา',
+    titleKey: 'footer.aboutUs',
     menus: [
-      { href: '/about/general', label: 'ข้อมูลทั่วไป' },
-      { href: '/about/clinics', label: 'ข้อมูลคลินิก' },
-      { href: '/about/partnerships', label: 'ความร่วมมือ' },
-      { href: '/about/careers', label: 'การรับสมัคร' },
-      { href: '/contact', label: 'ติดต่อเรา' },
-      { href: '/news', label: 'ข่าวสาร' },
+      { href: '/about/general', labelKey: 'nav.generalInfo' },
+      { href: '/about/clinics', labelKey: 'nav.clinicInfo' },
+      { href: '/about/partnerships', labelKey: 'nav.partnerships' },
+      { href: '/about/careers', labelKey: 'nav.careers' },
+      { href: '/contact', labelKey: 'nav.contact' },
+      { href: '/news', labelKey: 'nav.news' },
     ],
   },
   {
     id: '3',
-    title: 'ความรู้ด้านสุขภาพ',
+    titleKey: 'footer.healthKnowledge',
     menus: [
-      { href: '/health-knowledge', label: 'บทความสุขภาพ' },
+      { href: '/health-knowledge', labelKey: 'nav.healthKnowledge' },
     ],
   },
 ]
 
 const Footer: React.FC = () => {
+  const t = useTranslations()
+
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
       <div key={index} className="text-sm">
-        <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">{menu.title}</h2>
+        <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">{t(menu.titleKey)}</h2>
         <ul className="mt-5 space-y-4">
           {menu.menus.map((item, index) => (
             <li key={index}>
@@ -56,7 +63,7 @@ const Footer: React.FC = () => {
                 className="text-neutral-600 hover:text-black dark:text-neutral-300 dark:hover:text-white"
                 href={item.href}
               >
-                {item.label}
+                {t(item.labelKey)}
               </a>
             </li>
           ))}

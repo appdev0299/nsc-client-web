@@ -3,7 +3,7 @@ import { Button, ButtonProps } from './Button'
 
 const ButtonSecondary: React.FC<ButtonProps> = ({ color, outline, plain, children, ...props }) => {
   return (
-    <Button color="light" {...props}>
+    <Button color="secondary" {...props}>
       {children}
     </Button>
   )

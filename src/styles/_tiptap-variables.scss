@@ -52,17 +52,17 @@
   --tt-gray-dark-900: rgba(245, 245, 245, 1);
 
   /* Brand colors */
-  --tt-brand-color-50: rgba(239, 238, 255, 1);
-  --tt-brand-color-100: rgba(222, 219, 255, 1);
-  --tt-brand-color-200: rgba(195, 189, 255, 1);
-  --tt-brand-color-300: rgba(157, 138, 255, 1);
-  --tt-brand-color-400: rgba(122, 82, 255, 1);
-  --tt-brand-color-500: rgba(98, 41, 255, 1);
-  --tt-brand-color-600: rgba(84, 0, 229, 1);
-  --tt-brand-color-700: rgba(75, 0, 204, 1);
-  --tt-brand-color-800: rgba(56, 0, 153, 1);
-  --tt-brand-color-900: rgba(43, 25, 102, 1);
-  --tt-brand-color-950: hsla(257, 100%, 9%, 1);
+  --tt-brand-color-50: rgba(255, 248, 237, 1);
+  --tt-brand-color-100: rgba(255, 239, 212, 1);
+  --tt-brand-color-200: rgba(255, 219, 168, 1);
+  --tt-brand-color-300: rgba(255, 194, 112, 1);
+  --tt-brand-color-400: rgba(255, 160, 51, 1);
+  --tt-brand-color-500: rgba(251, 133, 0, 1);
+  --tt-brand-color-600: rgba(219, 106, 0, 1);
+  --tt-brand-color-700: rgba(184, 80, 0, 1);
+  --tt-brand-color-800: rgba(148, 61, 14, 1);
+  --tt-brand-color-900: rgba(122, 51, 13, 1);
+  --tt-brand-color-950: rgba(51, 27, 0, 1);
 
   /* Green */
   --tt-color-green-inc-5: hsla(129, 100%, 97%, 1);
@@ -121,12 +121,18 @@
        Radius variables 
     **************************************************/
 
-  --tt-radius-xxs: 0.125rem; /* 2px */
-  --tt-radius-xs: 0.25rem; /* 4px */
-  --tt-radius-sm: 0.375rem; /* 6px */
-  --tt-radius-md: 0.5rem; /* 8px */
-  --tt-radius-lg: 0.75rem; /* 12px */
-  --tt-radius-xl: 1rem; /* 16px */
+  --tt-radius-xxs: 0.125rem;
+  /* 2px */
+  --tt-radius-xs: 0.25rem;
+  /* 4px */
+  --tt-radius-sm: 0.375rem;
+  /* 6px */
+  --tt-radius-md: 0.5rem;
+  /* 8px */
+  --tt-radius-lg: 0.75rem;
+  /* 12px */
+  --tt-radius-xl: 1rem;
+  /* 16px */
 
   /************************************************** 
        Transition variables 

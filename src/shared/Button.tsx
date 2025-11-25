@@ -10,7 +10,7 @@ const styles = {
     // Sizing
     'px-[calc(--spacing(4)-1px)] py-[calc(--spacing(2.5)-1px)] sm:px-[calc(--spacing(5)-1px)] sm:text-sm/6 font-medium',
     // Focus
-    'focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500',
+    'focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary-500',
     // Disabled
     'data-disabled:opacity-50',
     // Icon
@@ -155,6 +155,10 @@ const styles = {
       'text-white [--btn-hover-overlay:var(--color-white)]/10 [--btn-bg:var(--color-primary-500)] [--btn-border:var(--color-primary-600)]/90',
       '[--btn-icon:var(--color-primary-300)] data-active:[--btn-icon:var(--color-primary-200)] data-hover:[--btn-icon:var(--color-primary-200)]',
     ],
+    secondary: [
+      'text-neutral-950 [--btn-hover-overlay:var(--color-white)]/25 [--btn-bg:var(--color-secondary-500)] [--btn-border:var(--color-secondary-600)]/90',
+      '[--btn-icon:var(--color-neutral-600)] data-active:[--btn-icon:var(--color-neutral-700)] data-hover:[--btn-icon:var(--color-neutral-700)]',
+    ],
   },
 
   //
@@ -164,7 +168,7 @@ const styles = {
     // Sizing
     'size-10 text-sm/none',
     // Focus
-    'focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-blue-500',
+    'focus:not-data-focus:outline-hidden data-focus:outline-2 data-focus:outline-offset-2 data-focus:outline-primary-500',
     // Disabled
     'data-disabled:opacity-50',
     // Icon
