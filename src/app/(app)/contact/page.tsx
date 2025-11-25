@@ -9,22 +9,22 @@ import { Metadata } from 'next'
 
 const info = [
   {
-    title: '🗺 ADDRESS',
+    title: '🗺 ที่อยู่',
     description: 'Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter',
   },
   {
-    title: '💌 EMAIL',
+    title: '💌 อีเมล',
     description: 'example@example.com',
   },
   {
-    title: '☎ PHONE',
+    title: '☎ เบอร์โทรศัพท์',
     description: '000-123-456-7890',
   },
 ]
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Explore contact us page',
+  title: 'ติดต่อเรา',
+  description: 'หน้าติดต่อเรา',
 }
 
 const PageContact = () => {
@@ -33,7 +33,7 @@ const PageContact = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="grid shrink-0 grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2">
           <div>
-            <h1 className="max-w-2xl text-4xl font-semibold sm:text-5xl">Contact</h1>
+            <h1 className="max-w-2xl text-4xl font-semibold sm:text-5xl">ติดต่อเรา</h1>
             <div className="mt-10 flex max-w-sm flex-col gap-y-8 sm:mt-20">
               {info.map((item, index) => (
                 <div key={index}>
@@ -42,26 +42,26 @@ const PageContact = () => {
                 </div>
               ))}
               <div>
-                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">🌏 SOCIALS</h3>
+                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">🌏 โซเชียลมีเดีย</h3>
                 <SocialsList className="mt-4" />
               </div>
             </div>
           </div>
           <form className="grid grid-cols-1 gap-6" action="#" method="post">
             <Field className="block">
-              <Label>Full name</Label>
+              <Label>ชื่อ-นามสกุล</Label>
               <Input placeholder="Example Doe" type="text" className="mt-1" />
             </Field>
             <Field className="block">
-              <Label>Email address</Label>
+              <Label>อีเมล</Label>
               <Input type="email" placeholder="example@example.com" className="mt-1" />
             </Field>
             <Field className="block">
-              <Label>Message</Label>
+              <Label>ข้อความ</Label>
               <Textarea className="mt-1" rows={6} />
             </Field>
             <div>
-              <ButtonPrimary type="submit">Send Message</ButtonPrimary>
+              <ButtonPrimary type="submit">ส่งข้อความ</ButtonPrimary>
             </div>
           </form>
         </div>

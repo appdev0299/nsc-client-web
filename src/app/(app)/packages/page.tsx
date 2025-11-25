@@ -52,7 +52,7 @@ export default function PackagesPage() {
                         },
                         author: {
                             id: pkg.clinic?.id || 'clinic-1',
-                            name: pkg.clinic?.name || 'General Clinic',
+                            name: pkg.clinic?.name || 'คลินิกทั่วไป',
                             handle: pkg.clinic?.name?.toLowerCase().replace(/\s+/g, '-') || 'general-clinic',
                             avatar: {
                                 src: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop',
@@ -116,10 +116,10 @@ export default function PackagesPage() {
             {/* Header */}
             <header className="mb-12 text-center max-w-3xl mx-auto">
                 <h1 className="text-4xl font-bold text-neutral-900 md:text-5xl dark:text-neutral-100 tracking-tight">
-                    All Health Packages
+                    แพ็กเกจสุขภาพทั้งหมด
                 </h1>
                 <p className="mt-4 text-lg text-neutral-500 dark:text-neutral-400">
-                    Explore our comprehensive health checkup packages designed for your wellbeing
+                    พบกับแพ็กเกจตรวจสุขภาพที่ครอบคลุม ออกแบบมาเพื่อความเป็นอยู่ที่ดีของคุณ
                 </p>
             </header>
 
@@ -131,7 +131,7 @@ export default function PackagesPage() {
                         <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
                         <Input
                             type="text"
-                            placeholder="Search packages by name..."
+                            placeholder="ค้นหาแพ็กเกจตามชื่อ..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="pl-12 pr-4 py-3 w-full rounded-2xl border-neutral-200 dark:border-neutral-700 focus:border-primary-600 dark:focus:border-primary-400"
@@ -144,7 +144,7 @@ export default function PackagesPage() {
                         onChange={(e) => setSelectedClinic(e.target.value)}
                         className="px-4 py-3 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-600 dark:focus:border-primary-400 focus:ring-2 focus:ring-primary-600/20 outline-none transition-colors cursor-pointer"
                     >
-                        <option value="all">All Clinics</option>
+                        <option value="all">คลินิกทั้งหมด</option>
                         {clinics.map((clinic) => (
                             <option key={clinic.id} value={clinic.id}>
                                 {clinic.name}
@@ -155,20 +155,20 @@ export default function PackagesPage() {
 
                 {/* Results Counter */}
                 <div className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                    Showing {filteredPackages.length} of {packages.length} packages
+                    แสดง {filteredPackages.length} จาก {packages.length} แพ็กเกจ
                 </div>
             </div>
 
             {/* Packages Grid */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-20">
-                    <div className="text-neutral-500 dark:text-neutral-400">Loading packages...</div>
+                    <div className="text-neutral-500 dark:text-neutral-400">กำลังโหลดแพ็กเกจ...</div>
                 </div>
             ) : filteredPackages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20">
                     <div className="text-neutral-500 dark:text-neutral-400 text-center">
-                        <p className="text-lg font-medium mb-2">No packages found</p>
-                        <p className="text-sm">Try adjusting your search or filter criteria</p>
+                        <p className="text-lg font-medium mb-2">ไม่พบแพ็กเกจ</p>
+                        <p className="text-sm">ลองปรับเปลี่ยนคำค้นหาหรือตัวกรองของคุณ</p>
                     </div>
                 </div>
             ) : (

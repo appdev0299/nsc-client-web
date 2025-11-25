@@ -60,16 +60,16 @@ export default function ClinicProfilePage() {
                     setClinic({
                         id: clinicData.id,
                         name: clinicData.name,
-                        description: clinicData.description || 'Welcome to our clinic.',
-                        address: clinicData.address || 'Bangkok, Thailand',
-                        phone: clinicData.phone || 'Contact us for more info',
+                        description: clinicData.description || 'ยินดีต้อนรับสู่คลินิกของเรา',
+                        address: clinicData.address || 'กรุงเทพมหานคร, ประเทศไทย',
+                        phone: clinicData.phone || 'ติดต่อสอบถามข้อมูลเพิ่มเติม',
                         email: clinicData.email || 'contact@clinic.com',
-                        openingHours: clinicData.openingHours || 'Mon-Fri: 9:00 AM - 5:00 PM',
+                        openingHours: clinicData.openingHours || 'จันทร์ - ศุกร์: 09:00 - 17:00 น.',
                         coverImage: clinicData.image || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2070&auto=format&fit=crop',
                         logo: clinicData.image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop',
                         rating: 4.8,
-                        location: 'Bangkok, Thailand',
-                        tagline: 'Your trusted healthcare partner',
+                        location: 'กรุงเทพมหานคร, ประเทศไทย',
+                        tagline: 'ผู้ดูแลสุขภาพที่คุณไว้วางใจ',
                     })
                 }
 
@@ -138,7 +138,7 @@ export default function ClinicProfilePage() {
     if (isLoading) {
         return (
             <div className="flex min-h-screen items-center justify-center">
-                <div className="text-neutral-500 dark:text-neutral-400">Loading clinic profile...</div>
+                <div className="text-neutral-500 dark:text-neutral-400">กำลังโหลดข้อมูลคลินิก...</div>
             </div>
         )
     }
@@ -146,7 +146,7 @@ export default function ClinicProfilePage() {
     if (!clinic) {
         return (
             <div className="flex min-h-screen items-center justify-center">
-                <div className="text-neutral-500 dark:text-neutral-400">Clinic not found</div>
+                <div className="text-neutral-500 dark:text-neutral-400">ไม่พบข้อมูลคลินิก</div>
             </div>
         )
     }
@@ -185,7 +185,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-center gap-1">
                                     <StarIcon className="h-5 w-5 text-yellow-400" />
                                     <span className="font-semibold">{clinic.rating}</span>
-                                    <span className="text-sm text-neutral-300">Rating</span>
+                                    <span className="text-sm text-neutral-300">คะแนน</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 text-sm text-neutral-300">
                                     <MapPinIcon className="h-4 w-4" />
@@ -204,7 +204,7 @@ export default function ClinicProfilePage() {
                     <div className="lg:col-span-2 space-y-12">
                         {/* About Section */}
                         <section>
-                            <h2 className="mb-6 text-3xl font-bold text-neutral-900 dark:text-neutral-100">About Us</h2>
+                            <h2 className="mb-6 text-3xl font-bold text-neutral-900 dark:text-neutral-100">เกี่ยวกับเรา</h2>
                             <div className="prose dark:prose-invert max-w-none">
                                 <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
                                     {clinic.description}
@@ -215,10 +215,10 @@ export default function ClinicProfilePage() {
                         {/* Clinic's Packages */}
                         <section>
                             <h2 className="mb-6 text-3xl font-bold text-neutral-900 dark:text-neutral-100">
-                                Our Health Packages
+                                แพ็กเกจสุขภาพของเรา
                             </h2>
                             {packages.length === 0 ? (
-                                <p className="text-neutral-500 dark:text-neutral-400">No packages available at this clinic.</p>
+                                <p className="text-neutral-500 dark:text-neutral-400">ไม่มีแพ็กเกจให้บริการในขณะนี้</p>
                             ) : (
                                 <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
                                     {packages.map((pkg) => (
@@ -233,12 +233,12 @@ export default function ClinicProfilePage() {
                     <div className="space-y-6">
                         {/* Contact Info Card */}
                         <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                            <h3 className="mb-4 text-xl font-bold text-neutral-900 dark:text-neutral-100">Contact Information</h3>
+                            <h3 className="mb-4 text-xl font-bold text-neutral-900 dark:text-neutral-100">ข้อมูลการติดต่อ</h3>
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
                                     <MapPinIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">Address</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">ที่อยู่</p>
                                         <p className="text-sm text-neutral-600 dark:text-neutral-400">{clinic.address}</p>
                                     </div>
                                 </div>
@@ -246,7 +246,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <PhoneIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">Phone</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">เบอร์โทรศัพท์</p>
                                         <a href={`tel:${clinic.phone}`} className="text-sm text-primary-600 hover:underline">
                                             {clinic.phone}
                                         </a>
@@ -256,7 +256,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <EnvelopeIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">Email</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">อีเมล</p>
                                         <a href={`mailto:${clinic.email}`} className="text-sm text-primary-600 hover:underline">
                                             {clinic.email}
                                         </a>
@@ -266,7 +266,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <ClockIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">Opening Hours</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">เวลาทำการ</p>
                                         <p className="text-sm text-neutral-600 dark:text-neutral-400">{clinic.openingHours}</p>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@ export default function ClinicProfilePage() {
 
                         {/* Google Map Embed */}
                         <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                            <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">Location</h3>
+                            <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">แผนที่</h3>
                             <div className="aspect-video w-full overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-800">
                                 <iframe
                                     src={`https://www.google.com/maps?q=${encodeURIComponent(clinic.address)}&output=embed`}

@@ -15,27 +15,27 @@ const Page = async () => {
     const packages = await getPackages()
 
     return (
-        <div className="relative container space-y-28 pb-28 lg:space-y-32 lg:pb-32">
+        <div className="relative container space-y-16 pb-16 lg:space-y-24 lg:pb-24">
             <SectionHeroAction posts={posts.slice(0, 5)} />
 
-            <div className="relative py-16 lg:py-20">
+            <div className="relative py-8 lg:py-12">
                 <BackgroundSection />
                 <SectionSliderPosts
                     postCardName="card7"
-                    heading="Explore our packages"
-                    subHeading="Discover our comprehensive health packages"
+                    heading="แพ็กเกจสุขภาพของเรา"
+                    subHeading="พบกับแพ็กเกจสุขภาพที่ครอบคลุมทุกความต้องการของคุณ"
                     posts={packages}
                     isPackage={true}
                     viewAllHref="/packages"
                 />
             </div>
 
-            <div className="relative py-16 lg:py-20">
-                <BackgroundSection />
+            <div className="relative py-8 lg:py-12">
+
                 <SectionSliderPosts
                     postCardName="card11"
-                    heading="Health Info"
-                    subHeading="Discover our latest health articles"
+                    heading="สาระน่ารู้ด้านสุขภาพ"
+                    subHeading="บทความสุขภาพล่าสุดที่คุณไม่ควรพลาด"
                     posts={posts.slice(0, 12)}
                     viewAllHref="/health-knowledge"
                 />

@@ -3,8 +3,8 @@ import { getPostsFromApi } from '@/data/api'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'News',
-    description: 'Latest news and articles',
+    title: 'ข่าวสาร',
+    description: 'ข่าวสารและบทความล่าสุด',
 }
 
 const PageNews = async () => {
@@ -14,9 +14,9 @@ const PageNews = async () => {
         <div className="nc-PageNews relative">
             <div className="container relative space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl font-semibold sm:text-4xl">News & Articles</h2>
+                    <h2 className="text-3xl font-semibold sm:text-4xl">ข่าวสารและบทความ</h2>
                     <span className="mt-2 block text-neutral-500 dark:text-neutral-400">
-                        Stay updated with the latest health news and articles.
+                        ติดตามข่าวสารและบทความสุขภาพล่าสุด
                     </span>
                 </div>
 

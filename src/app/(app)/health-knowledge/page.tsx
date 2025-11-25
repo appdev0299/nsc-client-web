@@ -9,28 +9,28 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Health Knowledge',
-    description: 'Discover our latest health articles',
+    title: 'ความรู้ด้านสุขภาพ',
+    description: 'พบกับบทความสุขภาพล่าสุดของเรา',
 }
 
 const filterTabs = [
     {
-        name: 'Articles',
+        name: 'บทความ',
         value: 'posts',
         icon: LicenseIcon,
     },
-    { name: 'Categories', value: 'categories', icon: Folder02Icon },
-    { name: 'Tags', value: 'tags', icon: Tag02Icon },
-    { name: 'Authors', value: 'authors', icon: UserListIcon },
+    { name: 'หมวดหมู่', value: 'categories', icon: Folder02Icon },
+    { name: 'แท็ก', value: 'tags', icon: Tag02Icon },
+    { name: 'ผู้เขียน', value: 'authors', icon: UserListIcon },
 ]
 
 const sortByOptions = [
-    { name: 'Most recent', value: 'most-recent' },
-    { name: 'Curated by admin', value: 'curated-by-admin' },
-    { name: 'Most appreciated', value: 'most-appreciated' },
-    { name: 'Most discussed', value: 'most-discussed' },
-    { name: 'Most viewed', value: 'most-viewed' },
-    { name: 'Most liked', value: 'most-liked' },
+    { name: 'ล่าสุด', value: 'most-recent' },
+    { name: 'คัดสรรโดยแอดมิน', value: 'curated-by-admin' },
+    { name: 'ได้รับความนิยมสูงสุด', value: 'most-appreciated' },
+    { name: 'มีการพูดถึงมากที่สุด', value: 'most-discussed' },
+    { name: 'เข้าชมมากที่สุด', value: 'most-viewed' },
+    { name: 'ถูกใจมากที่สุด', value: 'most-liked' },
 ]
 
 const Page = async () => {
@@ -49,7 +49,7 @@ const Page = async () => {
                                 id="s"
                                 name="s"
                                 type="search"
-                                placeholder="Search health articles..."
+                                placeholder="ค้นหาบทความสุขภาพ..."
                                 className="rounded-full shadow-lg"
                                 sizeClass="ps-14 py-5 pe-5 md:ps-16"
                             />
@@ -59,7 +59,7 @@ const Page = async () => {
                         </label>
                     </form>
                     <p className="mt-4 block text-center text-sm text-neutral-500 dark:text-neutral-400">
-                        Explore our comprehensive health knowledge base
+                        สำรวจคลังความรู้ด้านสุขภาพที่ครอบคลุมของเรา
                     </p>
                 </header>
             </div>

@@ -12,9 +12,9 @@ const PageAboutGeneral = ({ }) => {
             <div className="relative container space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <SectionHero
                     rightImg={rightImg}
-                    heading="About us."
-                    btnText="Get in touch"
-                    subHeading="We're impartial and independent, and every day we create distinctive, world-class programmes and content which inform, educate and entertain millions of people in the around the world."
+                    heading="เกี่ยวกับเรา"
+                    btnText="ติดต่อเรา"
+                    subHeading="เราเป็นกลางและเป็นอิสระ และทุกวันเราสร้างสรรค์โปรแกรมและเนื้อหาที่โดดเด่นระดับโลก ซึ่งให้ข้อมูล ให้ความรู้ และความบันเทิงแก่ผู้คนนับล้านทั่วโลก"
                 />
                 <Divider />
                 <SectionFounder />
@@ -24,27 +24,27 @@ const PageAboutGeneral = ({ }) => {
                 <div className="py-16 sm:py-24 lg:py-32">
                     <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-8">
                         <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:col-span-7 lg:text-5xl">
-                            Want product news and updates? Sign up for our newsletter.
+                            ต้องการข่าวสารและอัปเดตผลิตภัณฑ์? สมัครรับจดหมายข่าวของเรา
                         </h2>
                         <form className="w-full max-w-md lg:col-span-5 lg:pt-2">
                             <div className="flex gap-x-4">
                                 <label htmlFor="email-address" className="sr-only">
-                                    Email address
+                                    อีเมล
                                 </label>
                                 <Input
                                     id="email-address"
                                     name="email"
                                     type="email"
                                     required
-                                    placeholder="Enter your email"
+                                    placeholder="กรอกอีเมลของคุณ"
                                     autoComplete="email"
                                 />
-                                <Button type="submit">Subscribe</Button>
+                                <Button type="submit">สมัครสมาชิก</Button>
                             </div>
                             <p className="mt-4 text-sm/6">
-                                We care about your data. Read our{' '}
+                                เราใส่ใจข้อมูลของคุณ อ่าน{' '}
                                 <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                                    privacy&nbsp;policy
+                                    นโยบายความเป็นส่วนตัว
                                 </a>
                                 .
                             </p>

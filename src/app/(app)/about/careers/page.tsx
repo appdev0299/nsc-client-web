@@ -2,37 +2,37 @@ import ButtonPrimary from '@/shared/ButtonPrimary'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Careers',
+    title: 'ร่วมงานกับเรา',
 }
 
 const jobs = [
     {
         id: 1,
-        title: 'Senior Medical Officer',
-        department: 'Medical',
-        location: 'Bangkok',
-        type: 'Full-time',
+        title: 'เจ้าหน้าที่การแพทย์อาวุโส',
+        department: 'การแพทย์',
+        location: 'กรุงเทพมหานคร',
+        type: 'งานประจำ',
     },
     {
         id: 2,
-        title: 'Registered Nurse',
-        department: 'Nursing',
-        location: 'Bangkok',
-        type: 'Full-time',
+        title: 'พยาบาลวิชาชีพ',
+        department: 'การพยาบาล',
+        location: 'กรุงเทพมหานคร',
+        type: 'งานประจำ',
     },
     {
         id: 3,
-        title: 'Healthcare Administrator',
-        department: 'Administration',
-        location: 'Bangkok',
-        type: 'Full-time',
+        title: 'ผู้บริหารสถานพยาบาล',
+        department: 'บริหารจัดการ',
+        location: 'กรุงเทพมหานคร',
+        type: 'งานประจำ',
     },
     {
         id: 4,
-        title: 'Physical Therapist',
-        department: 'Therapy',
-        location: 'Bangkok',
-        type: 'Part-time',
+        title: 'นักกายภาพบำบัด',
+        department: 'กายภาพบำบัด',
+        location: 'กรุงเทพมหานคร',
+        type: 'พาร์ทไทม์',
     },
 ]
 
@@ -41,9 +41,9 @@ const PageCareers = () => {
         <div className="nc-PageCareers relative">
             <div className="container relative space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl font-semibold sm:text-4xl">Join Our Team</h2>
+                    <h2 className="text-3xl font-semibold sm:text-4xl">ร่วมทีมกับเรา</h2>
                     <span className="mt-2 block text-neutral-500 dark:text-neutral-400">
-                        Be part of a team dedicated to improving lives through exceptional healthcare.
+                        เป็นส่วนหนึ่งของทีมที่มุ่งมั่นพัฒนาคุณภาพชีวิตผ่านการดูแลสุขภาพที่ยอดเยี่ยม
                     </span>
                 </div>
 
@@ -64,7 +64,7 @@ const PageCareers = () => {
                                 <span>{job.type}</span>
                             </div>
                             <div className="mt-auto">
-                                <ButtonPrimary href="#">Apply Now</ButtonPrimary>
+                                <ButtonPrimary href="#">สมัครเลย</ButtonPrimary>
                             </div>
                         </div>
                     ))}

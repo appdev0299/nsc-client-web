@@ -78,7 +78,7 @@ const SectionSliderPosts: FC<Props> = ({
               href={viewAllHref}
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 transition-all hover:gap-2 dark:text-primary-400"
             >
-              <span>View All</span>
+              <span>ดูทั้งหมด</span>
               <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

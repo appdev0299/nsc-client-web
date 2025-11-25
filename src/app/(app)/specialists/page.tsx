@@ -10,7 +10,7 @@ import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 
 // Initial default tab
 const defaultTabs = [
-    { name: 'All Specialists', value: 'all', icon: UserListIcon },
+    { name: 'ผู้เชี่ยวชาญทั้งหมด', value: 'all', icon: UserListIcon },
 ]
 
 function SpecialistsContent() {
@@ -41,7 +41,7 @@ function SpecialistsContent() {
                         image: item.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=2070',
                         clinic: {
                             id: item.clinic?.id || 'clinic-1',
-                            name: item.clinic?.name || 'General Clinic'
+                            name: item.clinic?.name || 'คลินิกทั่วไป'
                         },
                         role: (item.role || item.specialization || '').toLowerCase()
                     }))
@@ -136,7 +136,7 @@ function SpecialistsContent() {
                                 id="s"
                                 name="s"
                                 type="search"
-                                placeholder="Search by name, specialty, or clinic..."
+                                placeholder="ค้นหาตามชื่อ, ความเชี่ยวชาญ หรือคลินิก..."
                                 className="rounded-full shadow-lg"
                                 sizeClass="ps-14 py-5 pe-5 md:ps-16"
                                 value={searchQuery}
@@ -148,7 +148,7 @@ function SpecialistsContent() {
                         </label>
                     </div>
                     <p className="mt-4 block text-sm text-center text-neutral-500">
-                        Found {filteredSpecialists.length} specialists
+                        พบผู้เชี่ยวชาญ {filteredSpecialists.length} ท่าน
                     </p>
                 </header>
             </div>
@@ -176,7 +176,7 @@ function SpecialistsContent() {
 
 export default function SpecialistsPage() {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>กำลังโหลด...</div>}>
             <SpecialistsContent />
         </Suspense>
     )

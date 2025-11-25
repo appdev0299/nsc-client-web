@@ -37,7 +37,7 @@ const SectionHeroAction: FC<Props> = ({ posts, className }) => {
                         </span>
                         <div className="mt-5 sm:mt-8">
                             <ButtonSecondary href={`/post/${handle}`}>
-                                <span>Read more</span>
+                                <span>อ่านเพิ่มเติม</span>
                                 <ArrowRightIcon className="size-6 rtl:rotate-180" />
                             </ButtonSecondary>
                         </div>

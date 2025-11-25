@@ -28,7 +28,7 @@ const PostCardMeta3: FC<Props> = ({ className, author, readingTime, date }) => {
           {readingTime && (
             <>
               <span className="mx-1">·</span>
-              <span>{readingTime} min read</span>
+              <span>อ่าน {readingTime} นาที</span>
             </>
           )}
         </p>

@@ -3,7 +3,7 @@ import NcImage from '@/components/NcImage/NcImage'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Partnerships',
+    title: 'ความร่วมมือ',
 }
 
 const partners = Array.from({ length: 10 }).map((_, i) => ({
@@ -17,9 +17,9 @@ const PagePartnerships = () => {
         <div className="nc-PagePartnerships relative">
             <div className="container relative space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl font-semibold sm:text-4xl">Our Partnerships</h2>
+                    <h2 className="text-3xl font-semibold sm:text-4xl">พันธมิตรของเรา</h2>
                     <span className="mt-2 block text-neutral-500 dark:text-neutral-400">
-                        We collaborate with leading organizations to provide the best healthcare services.
+                        เราร่วมมือกับองค์กรชั้นนำเพื่อให้บริการด้านสุขภาพที่ดีที่สุด
                     </span>
                 </div>
 
