@@ -26,6 +26,7 @@ interface Props extends Pick<HeadingWithSubProps, 'subHeading' | 'dimHeading'> {
   emblaOptions?: EmblaOptionsType
   isPackage?: boolean
   viewAllHref?: string
+  hiddenAuthor?: boolean
 }
 
 const SectionSliderPosts: FC<Props> = ({
@@ -37,6 +38,7 @@ const SectionSliderPosts: FC<Props> = ({
   postCardName = 'card4',
   isPackage = false,
   viewAllHref,
+  hiddenAuthor = false,
   emblaOptions = {
     slidesToScroll: 'auto',
   },
@@ -58,7 +60,7 @@ const SectionSliderPosts: FC<Props> = ({
       case 'card10V2':
         return <Card10V2 key={index} post={item} />
       case 'card11':
-        return <Card11 key={index} post={item} />
+        return <Card11 key={index} post={item} hiddenAuthor={hiddenAuthor} />
 
       default:
         return null

@@ -38,6 +38,7 @@ const Page = async () => {
                     subHeading="บทความสุขภาพล่าสุดที่คุณไม่ควรพลาด"
                     posts={posts.slice(0, 12)}
                     viewAllHref="/health-knowledge"
+                    hiddenAuthor={true}
                 />
             </div>
         </div>

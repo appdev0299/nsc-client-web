@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="th" className={notoSansThai.className}>
       <body className="bg-white text-base text-neutral-900 dark:bg-neutral-900 dark:text-neutral-200">
         {/* Use the ApplicationLayout which already includes Header2 (the designed Navbar) and Footer */}
-        <ApplicationLayout headerStyle="header-2" headerHasBorder={true} showBanner={false}>
+        <ApplicationLayout headerStyle="header-2" headerHasBorder={false} showBanner={false}>
           {children}
         </ApplicationLayout>
       </body>
