@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "services": "บริการ",
+    "healthKnowledge": "ความรู้ด้านสุขภาพ",
+    "about": "เกี่ยวกับเรา",
+    "news": "ข่าวสาร",
+    "clinicWarm": "คลินิกพยาบาลชุมชนอบอุ่น",
+    "clinicComfortable": "คลินิกใจสบาย",
+    "clinicFamilyWarm": "คลินิกครอบครัวอุ่นสุข",
+    "appointment": "นัดหมาย",
+    "findSpecialist": "ค้นหาผู้เชี่ยวชาญ",
+    "packages": "แพ็กเกจ",
+    "generalInfo": "ข้อมูลทั่วไป",
+    "clinicInfo": "ข้อมูลคลินิก",
+    "partnerships": "ความร่วมมือ",
+    "careers": "การรับสมัคร",
+    "contact": "ติดต่อเรา"
+  },
+  "common": {
+    "readMore": "อ่านเพิ่มเติม",
+    "viewAll": "ดูทั้งหมด",
+    "bookNow": "นัดหมายเลย",
+    "search": "ค้นหา",
+    "loading": "กำลังโหลด...",
+    "error": "เกิดข้อผิดพลาด",
+    "noResults": "ไม่พบข้อมูล",
+    "readingTime": "อ่าน {minutes} นาที"
+  },
+  "footer": {
+    "services": "บริการ",
+    "aboutUs": "เกี่ยวกับเรา",
+    "healthKnowledge": "ความรู้ด้านสุขภาพ",
+    "copyright": "© 2024 NSC Clinic. สงวนลิขสิทธิ์",
+    "privacy": "นโยบายความเป็นส่วนตัว",
+    "terms": "ข้อกำหนดการใช้งาน"
+  },
+  "language": {
+    "switchTo": "เปลี่ยนภาษา",
+    "thai": "ไทย",
+    "english": "English"
+  },
+  "metadata": {
+    "title": "NSC Clinic - ศูนย์ดูแลสุขภาพครบวงจร",
+    "description": "บริการดูแลสุขภาพครบวงจร นัดหมายแพทย์ออนไลน์"
+  }
+}

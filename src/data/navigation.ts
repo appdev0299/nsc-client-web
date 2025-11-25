@@ -3,83 +3,98 @@ export async function getNavigation(): Promise<TNavigationItem[]> {
     {
       id: '1',
       href: '/services',
-      name: 'บริการ',
+      name: 'services', // Translation key
+      translationKey: 'nav.services',
       type: 'dropdown',
       children: [
         {
           id: '1-1',
           href: '/clinics/bd2a07b5-d294-4604-b78f-c7aa21ce293c',
-          name: 'คลินิกพยาบาลชุมชนอบอุ่น',
+          name: 'clinicWarm',
+          translationKey: 'nav.clinicWarm',
         },
         {
           id: '1-2',
           href: '/clinics/b2cd8439-1224-47a2-9a88-1cf0a02628b2',
-          name: 'คลินิกใจสบาย',
+          name: 'clinicComfortable',
+          translationKey: 'nav.clinicComfortable',
         },
         {
           id: '1-3',
           href: '/clinics/804f5d20-5e79-45c6-8565-12963dc065f9',
-          name: 'คลินิกครอบครัวอุ่นสุข',
+          name: 'clinicFamilyWarm',
+          translationKey: 'nav.clinicFamilyWarm',
         },
         {
           id: '1-4',
           href: '/appointment',
-          name: 'นัดหมาย',
+          name: 'appointment',
+          translationKey: 'nav.appointment',
         },
         {
           id: '1-5',
           href: '/specialists',
-          name: 'ค้นหาผู้เชี่ยวชาญ',
+          name: 'findSpecialist',
+          translationKey: 'nav.findSpecialist',
         },
         {
           id: '1-6',
           href: '/packages',
-          name: 'แพ็กเกจ',
+          name: 'packages',
+          translationKey: 'nav.packages',
         },
       ],
     },
     {
       id: '2',
       href: '/health-knowledge',
-      name: 'ความรู้ด้านสุขภาพ',
+      name: 'healthKnowledge',
+      translationKey: 'nav.healthKnowledge',
     },
     {
       id: '3',
       href: '/about',
-      name: 'เกี่ยวกับเรา',
+      name: 'about',
+      translationKey: 'nav.about',
       type: 'dropdown',
       children: [
         {
           id: '3-1',
           href: '/about/general',
-          name: 'ข้อมูลทั่วไป',
+          name: 'generalInfo',
+          translationKey: 'nav.generalInfo',
         },
         {
           id: '3-2',
           href: '/clinics',
-          name: 'ข้อมูลคลินิก',
+          name: 'clinicInfo',
+          translationKey: 'nav.clinicInfo',
         },
         {
           id: '3-3',
           href: '/about/partnerships',
-          name: 'ความร่วมมือ',
+          name: 'partnerships',
+          translationKey: 'nav.partnerships',
         },
         {
           id: '3-4',
           href: '/about/careers',
-          name: 'การรับสมัคร',
+          name: 'careers',
+          translationKey: 'nav.careers',
         },
         {
           id: '3-5',
           href: '/contact',
-          name: 'ติดต่อเรา',
+          name: 'contact',
+          translationKey: 'nav.contact',
         },
       ],
     },
     {
       id: '4',
       href: '/news',
-      name: 'ข่าวสาร',
+      name: 'news',
+      translationKey: 'nav.news',
     },
   ]
 }
@@ -92,6 +107,7 @@ export type TNavigationItem = Partial<{
   id: string
   href: string
   name: string
+  translationKey?: string
   type?: 'dropdown' | 'mega-menu'
   isNew?: boolean
   children?: TNavigationItem[]

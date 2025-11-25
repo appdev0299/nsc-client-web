@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "services": "Services",
+    "healthKnowledge": "Health Knowledge",
+    "about": "About Us",
+    "news": "News",
+    "clinicWarm": "Warm Community Nursing Clinic",
+    "clinicComfortable": "Comfortable Heart Clinic",
+    "clinicFamilyWarm": "Warm Family Clinic",
+    "appointment": "Appointment",
+    "findSpecialist": "Find Specialist",
+    "packages": "Packages",
+    "generalInfo": "General Info",
+    "clinicInfo": "Clinic Info",
+    "partnerships": "Partnerships",
+    "careers": "Careers",
+    "contact": "Contact"
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "bookNow": "Book Now",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "noResults": "No results found",
+    "readingTime": "{minutes} min read"
+  },
+  "footer": {
+    "services": "Services",
+    "aboutUs": "About Us",
+    "healthKnowledge": "Health Knowledge",
+    "copyright": "© 2024 NSC Clinic. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "language": {
+    "switchTo": "Switch Language",
+    "thai": "ไทย",
+    "english": "English"
+  },
+  "metadata": {
+    "title": "NSC Clinic - Comprehensive Healthcare Center",
+    "description": "Comprehensive healthcare services, online doctor appointments"
+  }
+}

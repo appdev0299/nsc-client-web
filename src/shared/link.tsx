@@ -1,7 +1,8 @@
 'use client'
 
 import * as Headless from '@headlessui/react'
-import NextLink, { type LinkProps } from 'next/link'
+import { Link as I18nLink } from '@/i18n/routing'
+import { type LinkProps } from 'next/link'
 import React, { forwardRef } from 'react'
 
 export const Link = forwardRef(function Link(
@@ -12,7 +13,7 @@ export const Link = forwardRef(function Link(
 
   return (
     <Headless.DataInteractive>
-      <NextLink
+      <I18nLink
         {...props}
         ref={ref}
         onClick={(e) => {

@@ -1,4 +1,4 @@
-import { getLanguages, getNavigation } from '@/data/navigation'
+import { getNavigation } from '@/data/navigation'
 import { getAllPosts } from '@/data/posts'
 import Logo from '@/shared/Logo'
 import clsx from 'clsx'
@@ -16,7 +16,6 @@ interface Props {
 
 const Header2: FC<Props> = async ({ bottomBorder, className }) => {
   const navigationMenu = await getNavigation()
-  const languages = await getLanguages()
   const featuredPosts = (await getAllPosts()).slice(0, 2)
 
   return (
@@ -42,7 +41,7 @@ const Header2: FC<Props> = async ({ bottomBorder, className }) => {
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-x-0.5">
-          <LanguageSwitcher languages={languages} />
+          <LanguageSwitcher />
           <NotifyDropdown className="me-3" />
           <div className="ms-2 flex lg:hidden">
             <HamburgerBtnMenu />

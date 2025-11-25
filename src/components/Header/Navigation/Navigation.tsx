@@ -1,18 +1,23 @@
+'use client'
+
 import Card20 from '@/components/PostCards/Card20'
 import { TNavigationItem } from '@/data/navigation'
 import { TPost } from '@/data/posts'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { FC } from 'react'
+import { useTranslations } from 'next-intl'
 
 const Lv1MenuItem = ({ menuItem }: { menuItem: TNavigationItem }) => {
+  const t = useTranslations()
+
   return (
     <Link
       className="flex items-center self-center rounded-full px-4 py-2.5 text-sm font-medium whitespace-nowrap text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 lg:text-[15px] xl:px-5 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
       href={menuItem.href || '#'}
     >
-      {menuItem.name}
+      {menuItem.translationKey ? t(menuItem.translationKey as any) : menuItem.name}
       {menuItem.children?.length && (
         <ChevronDownIcon className="ms-1 -me-1 size-4 text-neutral-400" aria-hidden="true" />
       )}
@@ -21,6 +26,8 @@ const Lv1MenuItem = ({ menuItem }: { menuItem: TNavigationItem }) => {
 }
 
 const MegaMenu = ({ menuItem, featuredPosts }: { menuItem: TNavigationItem; featuredPosts: TPost[] }) => {
+  const t = useTranslations()
+
   const renderNavlink = (item: TNavigationItem) => {
     return (
       <li key={item.id} className={clsx('menu-item', item.isNew && 'menuIsNew')}>
@@ -28,7 +35,7 @@ const MegaMenu = ({ menuItem, featuredPosts }: { menuItem: TNavigationItem; feat
           className="font-normal text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white"
           href={item.href || '#'}
         >
-          {item.name}
+          {item.translationKey ? t(item.translationKey as any) : item.name}
         </Link>
       </li>
     )
@@ -46,7 +53,9 @@ const MegaMenu = ({ menuItem, featuredPosts }: { menuItem: TNavigationItem; feat
                 <div className="grid flex-1 grid-cols-4 gap-6 pe-10 xl:gap-8 2xl:pe-14">
                   {menuItem.children?.map((menuChild, index) => (
                     <div key={index}>
-                      <p className="font-medium text-neutral-900 dark:text-neutral-200">{menuChild.name}</p>
+                      <p className="font-medium text-neutral-900 dark:text-neutral-200">
+                        {menuChild.translationKey ? t(menuChild.translationKey as any) : menuChild.name}
+                      </p>
                       <ul className="mt-4 grid space-y-4">{menuChild.children?.map(renderNavlink)}</ul>
                     </div>
                   ))}
@@ -66,13 +75,15 @@ const MegaMenu = ({ menuItem, featuredPosts }: { menuItem: TNavigationItem; feat
 }
 
 const DropdownMenu = ({ menuItem }: { menuItem: TNavigationItem }) => {
+  const t = useTranslations()
+
   const renderMenuLink = (menuItem: TNavigationItem) => {
     return (
       <Link
         className="flex items-center rounded-md px-4 py-2 font-normal text-neutral-600 hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
         href={menuItem.href || '#'}
       >
-        {menuItem.name}
+        {menuItem.translationKey ? t(menuItem.translationKey as any) : menuItem.name}
         {menuItem.children?.length && <ChevronDownIcon className="ml-2 h-4 w-4 text-neutral-500" aria-hidden="true" />}
       </Link>
     )
