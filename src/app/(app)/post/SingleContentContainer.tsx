@@ -90,53 +90,7 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
         >
           <TheContent content={content} />
         </div>
-
-        {/* TAGS */}
-        <div className="mx-auto flex max-w-(--breakpoint-md) flex-wrap">
-          {tags.map((tag) => (
-            <Tag key={tag.id} className="me-2 mb-2" href={`/tag/${tag.handle}`}>
-              {tag.name}
-            </Tag>
-          ))}
-        </div>
-
-        {/* AUTHOR */}
-        <div className="mx-auto max-w-(--breakpoint-md) border-t border-b border-neutral-100 dark:border-neutral-700"></div>
-        <div className="mx-auto flex max-w-(--breakpoint-md)" id="author">
-          <Link href={`/author/${author.handle}`}>
-            <Avatar src={author.avatar.src} className="size-12 sm:size-24" />
-          </Link>
-          <div className="ms-3 flex max-w-lg flex-col gap-y-1 sm:ms-5">
-            <p className="text-xs tracking-wider text-neutral-500 uppercase">WRITTEN BY</p>
-            <Link className="text-lg font-semibold" href={`/author/${author.handle}`}>
-              {author.name}
-            </Link>
-            <p className="text-sm/relaxed dark:text-neutral-300">
-              {author.description}
-              <Link className="ms-1 underline" href={`/author/${author.handle}`}>
-                Read more
-              </Link>
-            </p>
-            <SocialsList className="mt-2" />
-          </div>
-        </div>
-
-        {/* COMMENT FORM */}
-        <div id="comments" className="mx-auto max-w-(--breakpoint-md) scroll-mt-20 pt-5">
-          <h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">Responses ({commentCount})</h3>
-          <SingleCommentForm />
-        </div>
-
-        {/* COMMENTS LIST */}
-        <div className="mx-auto max-w-(--breakpoint-md)">
-          <ul className="single-comment-lists space-y-5">
-            {comments.map((comment) => (
-              <CommentCard key={comment.id} comment={comment} />
-            ))}
-            <ButtonPrimary className="mt-10 w-full">View all {commentCount} comments</ButtonPrimary>
-          </ul>
-          <div ref={endedAnchorRef}></div>
-        </div>
+        <div ref={endedAnchorRef}></div>
       </div>
 
       {/* LIKE AND COMMENT STICKY */}
@@ -150,9 +104,8 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
           <div className="h-4 border-s border-neutral-200 dark:border-neutral-700"></div>
 
           <button
-            className={`size-8.5 items-center justify-center rounded-full bg-neutral-50 hover:bg-neutral-100 dark:bg-white/10 dark:hover:bg-white/20 ${
-              isShowScrollToTop ? 'flex' : 'hidden'
-            }`}
+            className={`size-8.5 items-center justify-center rounded-full bg-neutral-50 hover:bg-neutral-100 dark:bg-white/10 dark:hover:bg-white/20 ${isShowScrollToTop ? 'flex' : 'hidden'
+              }`}
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }}

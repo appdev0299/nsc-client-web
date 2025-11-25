@@ -1,5 +1,5 @@
-import { ApplicationLayout } from '../application-layout'
+import React from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <ApplicationLayout>{children}</ApplicationLayout>
+    return <>{children}</>;
 }

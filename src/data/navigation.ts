@@ -56,7 +56,7 @@ export async function getNavigation(): Promise<TNavigationItem[]> {
         },
         {
           id: '3-2',
-          href: '/about/clinics',
+          href: '/clinics',
           name: 'ข้อมูลคลินิก',
         },
         {
@@ -74,12 +74,12 @@ export async function getNavigation(): Promise<TNavigationItem[]> {
           href: '/contact',
           name: 'ติดต่อเรา',
         },
-        {
-          id: '3-6',
-          href: '/news',
-          name: 'ข่าวสาร',
-        },
       ],
+    },
+    {
+      id: '4',
+      href: '/news',
+      name: 'ข่าวสาร',
     },
   ]
 }

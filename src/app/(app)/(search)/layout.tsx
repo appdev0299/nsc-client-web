@@ -1,4 +1,4 @@
-import { ApplicationLayout } from '@/app/(app)/application-layout'
+
 import BackgroundSection from '@/components/BackgroundSection'
 import SectionGridCategoryBox from '@/components/SectionGridCategoryBox'
 import SectionSliderNewAuthors from '@/components/SectionSliderNewAuthors'
@@ -17,7 +17,7 @@ const Layout: React.FC<Props> = async ({ children }) => {
   const authors = await getAuthors()
 
   return (
-    <ApplicationLayout>
+    <>
       {children}
 
       <div className="container space-y-20 py-20 lg:space-y-28 lg:pb-28">
@@ -39,7 +39,7 @@ const Layout: React.FC<Props> = async ({ children }) => {
         {/* SUBCRIBES */}
         <SectionSubscribe2 />
       </div>
-    </ApplicationLayout>
+    </>
   )
 }
 

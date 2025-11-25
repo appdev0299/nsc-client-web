@@ -4,6 +4,8 @@ import Header2 from '@/components/Header/Header2'
 import AsideSidebarNavigation from '@/components/aside-sidebar-navigation'
 import Banner from '@/shared/banner'
 import React, { ReactNode } from 'react'
+import Aside from '@/components/aside'
+import { AudioProvider } from '@/components/AudioProvider'
 
 interface Props {
   children: ReactNode
@@ -19,19 +21,21 @@ const ApplicationLayout: React.FC<Props> = ({
   showBanner = false,
 }) => {
   return (
-    <>
-      {/* header - Chose header style here / header 1 or header 2*/}
-      {showBanner && <Banner />}
-      {headerStyle === 'header-2' && <Header2 bottomBorder={headerHasBorder} />}
-      {headerStyle === 'header-1' && <Header bottomBorder={headerHasBorder} />}
+    <AudioProvider>
+      <Aside.Provider>
+        {/* header - Chose header style here / header 1 or header 2*/}
+        {showBanner && <Banner />}
+        {headerStyle === 'header-2' && <Header2 bottomBorder={headerHasBorder} />}
+        {headerStyle === 'header-1' && <Header bottomBorder={headerHasBorder} />}
 
-      {children}
+        {children}
 
-      {/* footer - Chose footer style here / footer 1 or footer 2 or footer 3 or footer 4 */}
-      <Footer />
-      {/* aside sidebar navigation */}
-      <AsideSidebarNavigation />
-    </>
+        {/* footer - Chose footer style here / footer 1 or footer 2 or footer 3 or footer 4 */}
+        <Footer />
+        {/* aside sidebar navigation */}
+        <AsideSidebarNavigation />
+      </Aside.Provider>
+    </AudioProvider>
   )
 }
 

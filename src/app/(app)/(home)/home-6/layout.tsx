@@ -1,4 +1,3 @@
-import { ApplicationLayout } from '@/app/(app)/application-layout'
 import { ReactNode } from 'react'
 
 interface Props {
@@ -6,11 +5,7 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
-  return (
-    <ApplicationLayout headerStyle="header-1" showBanner={true}>
-      {children}
-    </ApplicationLayout>
-  )
+  return <>{children}</>
 }
 
 export default Layout

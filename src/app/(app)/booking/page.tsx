@@ -72,12 +72,38 @@ function BookingContent() {
             phone: '',
             note: '',
         },
-        paymentMethod: 'credit_card'
+        paymentMethod: 'qr_code'
     })
 
     const updateBookingData = (data: Partial<typeof bookingData>) => {
         setBookingData(prev => ({ ...prev, ...data }))
     }
+
+    // State for packages
+    const [packages, setPackages] = useState<any[]>([])
+
+    // Fetch packages on mount
+    useEffect(() => {
+        const fetchPackages = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/packages')
+                if (res.ok) {
+                    const data = await res.json()
+                    const mappedPackages = data.map((pkg: any, index: number) => ({
+                        id: pkg.id,
+                        name: pkg.name,
+                        price: parseInt(pkg.price),
+                        description: pkg.description,
+                        image: pkg.imageUrl || _placeholder_images[index % _placeholder_images.length]
+                    }))
+                    setPackages(mappedPackages)
+                }
+            } catch (error) {
+                console.error('Failed to fetch packages', error)
+            }
+        }
+        fetchPackages()
+    }, [])
 
     // Fetch package details if packageId is present
     useEffect(() => {
@@ -86,16 +112,16 @@ function BookingContent() {
 
             setIsLoadingPackage(true)
             try {
-                // Try to find in mock first (for demo consistency)
-                const mockPkg = MOCK_PACKAGES.find(p => p.id === packageId)
-                if (mockPkg) {
-                    updateBookingData({ selectedPackage: mockPkg })
+                // Try to find in loaded packages first
+                const existingPkg = packages.find(p => p.id === packageId)
+                if (existingPkg) {
+                    updateBookingData({ selectedPackage: existingPkg })
                     setCurrentStep(2)
                     setIsLoadingPackage(false)
                     return
                 }
 
-                // If not in mock, fetch from API
+                // If not loaded yet or not found, fetch specific
                 const res = await fetch(`http://localhost:3000/packages/${packageId}`)
                 if (res.ok) {
                     const data = await res.json()
@@ -106,7 +132,7 @@ function BookingContent() {
                         name: data.name,
                         price: parseInt(data.price),
                         description: data.description,
-                        image: _placeholder_images[imageIndex]
+                        image: data.imageUrl || _placeholder_images[imageIndex]
                     }
                     updateBookingData({ selectedPackage: pkg })
                     setCurrentStep(2)
@@ -121,7 +147,7 @@ function BookingContent() {
         }
 
         fetchPackage()
-    }, [packageId])
+    }, [packageId, packages])
 
     const handleNext = () => {
         if (currentStep < 5) setCurrentStep(currentStep + 1)
@@ -142,41 +168,43 @@ function BookingContent() {
 
         return (
             <div className="mb-12">
-                <div className="flex items-center justify-between">
-                    {steps.map((step, index) => {
-                        const stepNumber = index + 1
-                        const isActive = stepNumber === currentStep
-                        const isCompleted = stepNumber < currentStep
+                <div className="mx-auto max-w-3xl relative">
+                    <div className="flex items-center justify-between relative z-10">
+                        {steps.map((step, index) => {
+                            const stepNumber = index + 1
+                            const isActive = stepNumber === currentStep
+                            const isCompleted = stepNumber < currentStep
 
-                        return (
-                            <div key={index} className="flex flex-col items-center relative z-10">
-                                <div
-                                    className={clsx(
-                                        'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors duration-300',
-                                        isActive
-                                            ? 'border-primary-600 bg-primary-600 text-white'
-                                            : isCompleted
-                                                ? 'border-green-500 bg-green-500 text-white'
-                                                : 'border-neutral-300 bg-white text-neutral-500 dark:border-neutral-700 dark:bg-neutral-900'
-                                    )}
-                                >
-                                    {isCompleted ? (
-                                        <CheckCircleIcon className="h-6 w-6" />
-                                    ) : (
-                                        stepNumber
-                                    )}
+                            return (
+                                <div key={index} className="flex flex-col items-center bg-white dark:bg-neutral-900 px-2">
+                                    <div
+                                        className={clsx(
+                                            'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors duration-300',
+                                            isActive
+                                                ? 'border-primary-600 bg-primary-600 text-white'
+                                                : isCompleted
+                                                    ? 'border-green-500 bg-green-500 text-white'
+                                                    : 'border-neutral-300 bg-white text-neutral-500 dark:border-neutral-700 dark:bg-neutral-900'
+                                        )}
+                                    >
+                                        {isCompleted ? (
+                                            <CheckCircleIcon className="h-6 w-6" />
+                                        ) : (
+                                            stepNumber
+                                        )}
+                                    </div>
+                                    <span
+                                        className={clsx(
+                                            'mt-2 text-[10px] sm:text-sm font-medium text-center leading-tight',
+                                            isActive ? 'text-primary-600' : isCompleted ? 'text-green-500' : 'text-neutral-500'
+                                        )}
+                                    >
+                                        {step}
+                                    </span>
                                 </div>
-                                <span
-                                    className={clsx(
-                                        'mt-2 text-xs font-medium sm:text-sm',
-                                        isActive ? 'text-primary-600' : isCompleted ? 'text-green-500' : 'text-neutral-500'
-                                    )}
-                                >
-                                    {step}
-                                </span>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
 
                     {/* Progress Bar Background */}
                     <div className="absolute top-5 left-0 h-[2px] w-full -translate-y-1/2 bg-neutral-200 dark:bg-neutral-700 -z-0 hidden sm:block" />
@@ -192,39 +220,90 @@ function BookingContent() {
     }
 
     // --- Step 1: Select Package ---
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedCategory, setSelectedCategory] = useState('All')
+
+    const categories = ['All', 'Check-up', 'Heart', 'Cancer', 'Other']
+
+    const filteredPackages = packages.filter(pkg => {
+        const matchesSearch = pkg.name.toLowerCase().includes(searchTerm.toLowerCase())
+        const matchesCategory = selectedCategory === 'All' ||
+            (selectedCategory === 'Check-up' && pkg.name.includes('ตรวจสุขภาพ')) ||
+            (selectedCategory === 'Heart' && pkg.name.includes('หัวใจ')) ||
+            (selectedCategory === 'Cancer' && pkg.name.includes('มะเร็ง')) ||
+            (selectedCategory === 'Other' && !pkg.name.includes('ตรวจสุขภาพ') && !pkg.name.includes('หัวใจ') && !pkg.name.includes('มะเร็ง'))
+
+        return matchesSearch && matchesCategory
+    })
+
     const renderStep1 = () => (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Select a Package</h2>
+        <div className="space-y-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Select a Package</h2>
+
+                {/* Search & Filter */}
+                <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                    <Input
+                        placeholder="Search packages..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full sm:w-64"
+                    />
+                    <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                        {categories.map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => setSelectedCategory(cat)}
+                                className={clsx(
+                                    "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
+                                    selectedCategory === cat
+                                        ? "bg-primary-600 text-white"
+                                        : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                                )}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {MOCK_PACKAGES.map((pkg) => (
-                    <div
-                        key={pkg.id}
-                        onClick={() => updateBookingData({ selectedPackage: pkg })}
-                        className={clsx(
-                            'cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-lg',
-                            bookingData.selectedPackage?.id === pkg.id
-                                ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/10'
-                                : 'border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900'
-                        )}
-                    >
-                        <div className="relative aspect-video w-full">
-                            <Image src={pkg.image} alt={pkg.name} fill className="object-cover" />
-                        </div>
-                        <div className="p-5">
-                            <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{pkg.name}</h3>
-                            <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2">{pkg.description}</p>
-                            <div className="mt-4 flex items-center justify-between">
-                                <span className="text-xl font-bold text-primary-600">฿{pkg.price.toLocaleString()}</span>
-                                <div className={clsx(
-                                    "h-6 w-6 rounded-full border-2 flex items-center justify-center",
-                                    bookingData.selectedPackage?.id === pkg.id ? "border-primary-600" : "border-neutral-300"
-                                )}>
-                                    {bookingData.selectedPackage?.id === pkg.id && <div className="h-3 w-3 rounded-full bg-primary-600" />}
+                {filteredPackages.length > 0 ? (
+                    filteredPackages.map((pkg) => (
+                        <div
+                            key={pkg.id}
+                            onClick={() => updateBookingData({ selectedPackage: pkg })}
+                            className={clsx(
+                                'cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-lg',
+                                bookingData.selectedPackage?.id === pkg.id
+                                    ? 'border-primary-600 bg-primary-50 dark:bg-primary-900/10'
+                                    : 'border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900'
+                            )}
+                        >
+                            <div className="relative aspect-video w-full">
+                                <Image src={pkg.image} alt={pkg.name} fill className="object-cover" />
+                            </div>
+                            <div className="p-5">
+                                <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{pkg.name}</h3>
+                                <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400 line-clamp-2">{pkg.description}</p>
+                                <div className="mt-4 flex items-center justify-between">
+                                    <span className="text-xl font-bold text-primary-600">฿{pkg.price.toLocaleString()}</span>
+                                    <div className={clsx(
+                                        "h-6 w-6 rounded-full border-2 flex items-center justify-center",
+                                        bookingData.selectedPackage?.id === pkg.id ? "border-primary-600" : "border-neutral-300"
+                                    )}>
+                                        {bookingData.selectedPackage?.id === pkg.id && <div className="h-3 w-3 rounded-full bg-primary-600" />}
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="col-span-full text-center py-12 text-neutral-500">
+                        No packages found matching your criteria.
                     </div>
-                ))}
+                )}
             </div>
         </div>
     )
@@ -257,7 +336,7 @@ function BookingContent() {
                 {/* Time Selection */}
                 <div className="space-y-6">
                     <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">Available Slots</h3>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {TIME_SLOTS.map((time) => (
                             <button
                                 key={time}
@@ -345,7 +424,14 @@ function BookingContent() {
                     onChange={(val) => updateBookingData({ paymentMethod: val })}
                     className="space-y-4"
                 >
-                    <Field className="flex items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
+                    <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
+                        <Radio value="qr_code" color="indigo" />
+                        <div className="flex-1">
+                            <Label className="cursor-pointer">QR Code Payment</Label>
+                            <p className="text-sm text-neutral-500">Scan QR code to pay instantly</p>
+                        </div>
+                    </Field>
+                    <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
                         <Radio value="credit_card" color="indigo" />
                         <div className="flex-1">
                             <Label className="cursor-pointer">Credit / Debit Card</Label>
@@ -357,7 +443,7 @@ function BookingContent() {
                             <div className="h-6 w-10 bg-neutral-200 rounded"></div>
                         </div>
                     </Field>
-                    <Field className="flex items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
+                    <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
                         <Radio value="bank_transfer" color="indigo" />
                         <div className="flex-1">
                             <Label className="cursor-pointer">Bank Transfer</Label>
@@ -413,12 +499,12 @@ function BookingContent() {
     }
 
     return (
-        <div className="container py-16 lg:py-24 pb-32">
-            <header className="mb-16 text-center max-w-2xl mx-auto">
-                <h1 className="text-4xl font-bold text-neutral-900 md:text-5xl dark:text-neutral-100 tracking-tight">
+        <div className="container py-10 lg:py-24 pb-32">
+            <header className="mb-8 lg:mb-16 text-center max-w-2xl mx-auto">
+                <h1 className="text-3xl font-bold text-neutral-900 md:text-5xl dark:text-neutral-100 tracking-tight">
                     Booking & Checkout
                 </h1>
-                <p className="mt-4 text-lg text-neutral-500 dark:text-neutral-400">
+                <p className="mt-4 text-base md:text-lg text-neutral-500 dark:text-neutral-400">
                     Complete your booking in just a few simple steps.
                 </p>
             </header>
