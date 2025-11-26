@@ -27,6 +27,16 @@ const nextConfig = {
         hostname: 'example.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pixabay.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.pixabay.com',
+        pathname: '/**',
+      },
     ],
   },
 }

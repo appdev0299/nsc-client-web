@@ -1,7 +1,7 @@
 import { TPost } from './posts'
 
 function getValidImageUrl(url: string | undefined | null): string {
-    const fallback = 'https://images.unsplash.com/photo-1628155179117-685ec76c25f4?q=80&w=1000&auto=format&fit=crop';
+    const fallback = '/images/nurse-design.jpg';
     if (!url || typeof url !== 'string' || url.includes('example.com')) {
         return fallback;
     }
@@ -72,4 +72,48 @@ export async function getPostsFromApi(): Promise<TPost[]> {
 export async function getPostByHandleFromApi(handle: string): Promise<TPost | null> {
     const posts = await getPostsFromApi()
     return posts.find((post) => post.handle === handle) || null
+}
+
+export interface TClinic {
+    id: string
+    name: string
+    description?: string
+    address?: string
+    phoneNumber?: string
+    email?: string
+    website?: string
+    logo?: string
+    coverImage?: string
+    images?: string[]
+}
+
+export async function getClinicsFromApi(): Promise<TClinic[]> {
+    try {
+        const res = await fetch('http://localhost:3000/clinics', {
+            cache: 'no-store',
+            next: { tags: ['clinics'] }
+        })
+
+        if (!res.ok) {
+            console.error('Failed to fetch clinics:', res.status, res.statusText)
+            return []
+        }
+
+        const data = await res.json()
+        return data.map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            description: item.description,
+            address: item.address,
+            phoneNumber: item.phoneNumber,
+            email: item.email,
+            website: item.website,
+            logo: getValidImageUrl(item.logo),
+            coverImage: getValidImageUrl(item.coverImage),
+            images: item.images?.map((img: string) => getValidImageUrl(img)) || []
+        }))
+    } catch (error) {
+        console.error('Error fetching clinics from API:', error)
+        return []
+    }
 }

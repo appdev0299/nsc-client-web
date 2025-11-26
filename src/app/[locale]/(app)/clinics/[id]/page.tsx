@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Image from 'next/image'
+import NcImage from '@/components/NcImage/NcImage'
 import Card7 from '@/components/PostCards/Card7'
 import { TPost } from '@/data/posts'
 import { MapPinIcon, PhoneIcon, ClockIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/24/solid'
+import SpecialistCard, { Specialist } from '@/components/SpecialistCard'
+import clsx from 'clsx'
 
 interface Clinic {
     id: string
@@ -29,7 +32,9 @@ export default function ClinicProfilePage() {
 
     const [clinic, setClinic] = useState<Clinic | null>(null)
     const [packages, setPackages] = useState<TPost[]>([])
+    const [staff, setStaff] = useState<Specialist[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const [activeTab, setActiveTab] = useState('about')
 
     useEffect(() => {
         const fetchClinicData = async () => {
@@ -95,7 +100,7 @@ export default function ClinicProfilePage() {
                         postType: 'standard',
                         status: 'published',
                         featuredImage: {
-                            src: `https://images.unsplash.com/photo-${1576091160399 + index}?q=80&w=2070&auto=format&fit=crop`,
+                            src: pkg.image || `https://images.unsplash.com/photo-${1576091160399 + index}?q=80&w=2070&auto=format&fit=crop`,
                             alt: pkg.name,
                             width: 1920,
                             height: 1080,
@@ -123,6 +128,33 @@ export default function ClinicProfilePage() {
 
                     setPackages(transformedPackages)
                 }
+
+                // 3. Fetch Staff for this clinic
+                try {
+                    const staffRes = await fetch(`http://localhost:3000/staff`)
+                    if (staffRes.ok) {
+                        const allStaff = await staffRes.json()
+                        // Filter staff for this clinic
+                        const clinicStaff = allStaff.filter((s: any) => s.clinicId === clinicId || s.clinic?.id === clinicId)
+
+                        // Transform staff data
+                        const transformedStaff: Specialist[] = clinicStaff.map((s: any) => ({
+                            id: s.id,
+                            name: s.name,
+                            specialty: s.specialty || 'General Practitioner',
+                            image: s.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=2070&auto=format&fit=crop',
+                            clinic: {
+                                id: clinicId,
+                                name: clinicData?.name || 'Clinic'
+                            },
+                            role: s.role || 'Doctor'
+                        }))
+                        setStaff(transformedStaff)
+                    }
+                } catch (e) {
+                    console.warn("Failed to fetch staff", e)
+                }
+
             } catch (error) {
                 console.error('Error fetching clinic data:', error)
             } finally {
@@ -155,7 +187,8 @@ export default function ClinicProfilePage() {
         <div className="clinic-profile">
             {/* Hero Section */}
             <div className="relative h-[400px] w-full overflow-hidden bg-neutral-900">
-                <Image
+                <NcImage
+                    containerClassName="absolute inset-0"
                     src={clinic.coverImage}
                     alt={clinic.name}
                     fill
@@ -169,7 +202,8 @@ export default function ClinicProfilePage() {
                     <div className="flex items-end gap-6">
                         {/* Clinic Logo */}
                         <div className="relative h-32 w-32 flex-shrink-0 overflow-hidden rounded-2xl border-4 border-white bg-white shadow-2xl">
-                            <Image
+                            <NcImage
+                                containerClassName="absolute inset-0"
                                 src={clinic.logo}
                                 alt={clinic.name}
                                 fill
@@ -201,32 +235,77 @@ export default function ClinicProfilePage() {
             <div className="container py-16">
                 <div className="grid gap-12 lg:grid-cols-3">
                     {/* Left Column - Main Info */}
-                    <div className="lg:col-span-2 space-y-12">
-                        {/* About Section */}
-                        <section>
-                            <h2 className="mb-6 text-3xl font-bold text-neutral-900 dark:text-neutral-100">เกี่ยวกับเรา</h2>
-                            <div className="prose dark:prose-invert max-w-none">
-                                <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                                    {clinic.description}
-                                </p>
-                            </div>
-                        </section>
+                    <div className="lg:col-span-2 space-y-8">
+                        {/* Tabs */}
+                        <div className="flex items-center gap-8 border-b border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+                            {['about', 'packages', 'staff'].map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setActiveTab(tab)}
+                                    className={clsx(
+                                        'relative py-4 text-base font-medium transition-colors whitespace-nowrap',
+                                        activeTab === tab
+                                            ? 'text-primary-600 dark:text-primary-500'
+                                            : 'text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
+                                    )}
+                                >
+                                    {tab === 'about' && 'เกี่ยวกับเรา'}
+                                    {tab === 'packages' && 'แพ็กเกจสุขภาพ'}
+                                    {tab === 'staff' && 'บุคลากรทางการแพทย์'}
+                                    {activeTab === tab && (
+                                        <span className="absolute bottom-0 left-0 h-0.5 w-full bg-primary-600 dark:bg-primary-500" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
 
-                        {/* Clinic's Packages */}
-                        <section>
-                            <h2 className="mb-6 text-3xl font-bold text-neutral-900 dark:text-neutral-100">
-                                แพ็กเกจสุขภาพของเรา
-                            </h2>
-                            {packages.length === 0 ? (
-                                <p className="text-neutral-500 dark:text-neutral-400">ไม่มีแพ็กเกจให้บริการในขณะนี้</p>
-                            ) : (
-                                <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
-                                    {packages.map((pkg) => (
-                                        <Card7 key={pkg.id} post={pkg} isPackage={true} />
-                                    ))}
-                                </div>
+                        {/* Tab Content */}
+                        <div className="mt-8">
+                            {activeTab === 'about' && (
+                                <section className="animate-fade-in">
+                                    <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">เกี่ยวกับเรา</h2>
+                                    <div className="prose dark:prose-invert max-w-none">
+                                        <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                                            {clinic.description}
+                                        </p>
+                                    </div>
+                                </section>
                             )}
-                        </section>
+
+                            {activeTab === 'packages' && (
+                                <section className="animate-fade-in">
+                                    <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+                                        แพ็กเกจสุขภาพของเรา
+                                    </h2>
+                                    {packages.length === 0 ? (
+                                        <p className="text-neutral-500 dark:text-neutral-400">ไม่มีแพ็กเกจให้บริการในขณะนี้</p>
+                                    ) : (
+                                        <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
+                                            {packages.map((pkg) => (
+                                                <Card7 key={pkg.id} post={pkg} isPackage={true} />
+                                            ))}
+                                        </div>
+                                    )}
+                                </section>
+                            )}
+
+                            {activeTab === 'staff' && (
+                                <section className="animate-fade-in">
+                                    <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">
+                                        บุคลากรทางการแพทย์
+                                    </h2>
+                                    {staff.length === 0 ? (
+                                        <p className="text-neutral-500 dark:text-neutral-400">ยังไม่มีข้อมูลบุคลากรในขณะนี้</p>
+                                    ) : (
+                                        <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
+                                            {staff.map((member) => (
+                                                <SpecialistCard key={member.id} specialist={member} />
+                                            ))}
+                                        </div>
+                                    )}
+                                </section>
+                            )}
+                        </div>
                     </div>
 
                     {/* Right Column - Sidebar */}

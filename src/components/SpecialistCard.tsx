@@ -36,22 +36,6 @@ const SpecialistCard: FC<Props> = ({ className, specialist }) => {
                 <h3 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">{name}</h3>
                 <p className="text-sm text-primary-600 font-medium uppercase tracking-wider">{specialty}</p>
             </div>
-
-            <div className="mt-3 mb-8">
-                <p className="text-xs text-neutral-500 dark:text-neutral-400 flex items-center justify-center gap-1">
-                    <span>at</span>
-                    <span className="font-semibold text-neutral-700 dark:text-neutral-300">{clinic.name}</span>
-                </p>
-            </div>
-
-            <div className="mt-auto w-full">
-                <ButtonPrimary
-                    href={`/specialists/${specialist.id}`}
-                    className="w-full py-3 text-sm font-medium shadow-lg shadow-primary-600/20"
-                >
-                    View Profile
-                </ButtonPrimary>
-            </div>
         </div>
     )
 }

@@ -24,14 +24,14 @@ const NcImage: FC<Props> = ({
 
   return (
     <div className={clsx('', containerClassName)}>
-      {imageSrc ? (
+      {imageSrc && String(imageSrc).trim() ? (
         <Image
           className={className}
           alt={alt}
           sizes={sizes}
           src={imageSrc}
           {...args}
-          onError={() => setImageSrc('/images/placeholder-image.png')}
+          onError={() => setImageSrc('/images/nurse-design.jpg')}
         />
       ) : null}
     </div>

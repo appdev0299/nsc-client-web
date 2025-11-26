@@ -9,36 +9,24 @@ export async function getNavigation(): Promise<TNavigationItem[]> {
       children: [
         {
           id: '1-1',
-          href: '/clinics/bd2a07b5-d294-4604-b78f-c7aa21ce293c',
-          name: 'clinicWarm',
-          translationKey: 'nav.clinicWarm',
+          href: '/clinics',
+          name: 'clinics',
+          translationKey: 'nav.clinics',
         },
         {
           id: '1-2',
-          href: '/clinics/b2cd8439-1224-47a2-9a88-1cf0a02628b2',
-          name: 'clinicComfortable',
-          translationKey: 'nav.clinicComfortable',
-        },
-        {
-          id: '1-3',
-          href: '/clinics/804f5d20-5e79-45c6-8565-12963dc065f9',
-          name: 'clinicFamilyWarm',
-          translationKey: 'nav.clinicFamilyWarm',
-        },
-        {
-          id: '1-4',
           href: '/appointment',
           name: 'appointment',
           translationKey: 'nav.appointment',
         },
         {
-          id: '1-5',
+          id: '1-3',
           href: '/specialists',
           name: 'findSpecialist',
           translationKey: 'nav.findSpecialist',
         },
         {
-          id: '1-6',
+          id: '1-4',
           href: '/packages',
           name: 'packages',
           translationKey: 'nav.packages',
