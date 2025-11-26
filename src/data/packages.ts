@@ -1,7 +1,7 @@
 import { TPost } from './posts'
 
 const _placeholder_images = [
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=2091&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=2032&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop',
@@ -9,9 +9,9 @@ const _placeholder_images = [
     'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop',
 ]
 
-export async function getPackages(): Promise<TPost[]> {
+export async function getPackages(locale: string = 'th'): Promise<TPost[]> {
     try {
-        const res = await fetch('http://localhost:3000/packages', { cache: 'no-store' })
+        const res = await fetch(`http://localhost:3000/packages?lang=${locale}`, { cache: 'no-store' })
 
         if (!res.ok) {
             throw new Error('Failed to fetch packages')

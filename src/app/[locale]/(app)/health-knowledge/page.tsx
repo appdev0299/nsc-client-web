@@ -7,34 +7,42 @@ import Input from '@/shared/Input'
 import { Folder02Icon, LicenseIcon, Search01Icon, Tag02Icon, UserListIcon } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-    title: 'ความรู้ด้านสุขภาพ',
-    description: 'พบกับบทความสุขภาพล่าสุดของเรา',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params
+    const t = await getTranslations({ locale, namespace: 'healthKnowledge' })
+
+    return {
+        title: t('title'),
+        description: t('description'),
+    }
 }
 
-const filterTabs = [
-    {
-        name: 'บทความ',
-        value: 'posts',
-        icon: LicenseIcon,
-    },
-    { name: 'หมวดหมู่', value: 'categories', icon: Folder02Icon },
-    { name: 'แท็ก', value: 'tags', icon: Tag02Icon },
-    { name: 'ผู้เขียน', value: 'authors', icon: UserListIcon },
-]
+const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+    const { locale } = await params
+    const t = await getTranslations({ locale, namespace: 'healthKnowledge' })
+    const posts = await getPostsFromApi(locale)
 
-const sortByOptions = [
-    { name: 'ล่าสุด', value: 'most-recent' },
-    { name: 'คัดสรรโดยแอดมิน', value: 'curated-by-admin' },
-    { name: 'ได้รับความนิยมสูงสุด', value: 'most-appreciated' },
-    { name: 'มีการพูดถึงมากที่สุด', value: 'most-discussed' },
-    { name: 'เข้าชมมากที่สุด', value: 'most-viewed' },
-    { name: 'ถูกใจมากที่สุด', value: 'most-liked' },
-]
+    const filterTabs = [
+        {
+            name: t('tabs.posts'),
+            value: 'posts',
+            icon: LicenseIcon,
+        },
+        { name: t('tabs.categories'), value: 'categories', icon: Folder02Icon },
+        { name: t('tabs.tags'), value: 'tags', icon: Tag02Icon },
+        { name: t('tabs.authors'), value: 'authors', icon: UserListIcon },
+    ]
 
-const Page = async () => {
-    const posts = await getPostsFromApi()
+    const sortByOptions = [
+        { name: t('sort.mostRecent'), value: 'most-recent' },
+        { name: t('sort.curatedByAdmin'), value: 'curated-by-admin' },
+        { name: t('sort.mostAppreciated'), value: 'most-appreciated' },
+        { name: t('sort.mostDiscussed'), value: 'most-discussed' },
+        { name: t('sort.mostViewed'), value: 'most-viewed' },
+        { name: t('sort.mostLiked'), value: 'most-liked' },
+    ]
 
     return (
         <div className="health-knowledge-page">
@@ -49,7 +57,7 @@ const Page = async () => {
                                 id="s"
                                 name="s"
                                 type="search"
-                                placeholder="ค้นหาบทความสุขภาพ..."
+                                placeholder={t('searchPlaceholder')}
                                 className="rounded-full shadow-lg"
                                 sizeClass="ps-14 py-5 pe-5 md:ps-16"
                             />
@@ -59,7 +67,7 @@ const Page = async () => {
                         </label>
                     </form>
                     <p className="mt-4 block text-center text-sm text-neutral-500 dark:text-neutral-400">
-                        สำรวจคลังความรู้ด้านสุขภาพที่ครอบคลุมของเรา
+                        {t('subtitle')}
                     </p>
                 </header>
             </div>

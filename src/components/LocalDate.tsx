@@ -1,5 +1,6 @@
 'use client'
 
+import { useLocale } from 'next-intl'
 import { FC } from 'react'
 
 interface Props {
@@ -8,10 +9,21 @@ interface Props {
   options?: Intl.DateTimeFormatOptions
 }
 
-const LocalDate: FC<Props> = ({ date, className, options = { month: 'short', day: 'numeric', year: 'numeric' } }) => {
+const LocalDate: FC<Props> = ({ date, className, options }) => {
+  const locale = useLocale()
+
+  const defaultOptions: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }
+
+  const mergedOptions = options || defaultOptions
+  const localeString = locale === 'th' ? 'th-TH' : 'en-US'
+
   return (
     <time dateTime={date} className={className}>
-      {new Date(date).toLocaleDateString('en-US', options)}
+      {new Date(date).toLocaleDateString(localeString, mergedOptions)}
     </time>
   )
 }

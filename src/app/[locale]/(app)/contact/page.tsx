@@ -1,39 +1,40 @@
-import SectionSubscribe2 from '@/components/SectionSubscribe2'
 import ButtonPrimary from '@/shared/ButtonPrimary'
-import { Divider } from '@/shared/divider'
 import { Field, Label } from '@/shared/fieldset'
 import Input from '@/shared/Input'
 import SocialsList from '@/shared/SocialsList'
 import Textarea from '@/shared/Textarea'
 import { Metadata } from 'next'
-
-const info = [
-  {
-    title: '🗺 ที่อยู่',
-    description: 'Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter',
-  },
-  {
-    title: '💌 อีเมล',
-    description: 'example@example.com',
-  },
-  {
-    title: '☎ เบอร์โทรศัพท์',
-    description: '000-123-456-7890',
-  },
-]
+import { useTranslations } from 'next-intl'
 
 export const metadata: Metadata = {
-  title: 'ติดต่อเรา',
-  description: 'หน้าติดต่อเรา',
+  title: 'Contact Us',
+  description: 'Contact Us Page',
 }
 
 const PageContact = () => {
+  const t = useTranslations('contact')
+
+  const info = [
+    {
+      title: `🗺 ${t('address')}`,
+      description: 'Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter',
+    },
+    {
+      title: `💌 ${t('email')}`,
+      description: 'example@example.com',
+    },
+    {
+      title: `☎ ${t('phone')}`,
+      description: '000-123-456-7890',
+    },
+  ]
+
   return (
     <div className="pt-10 pb-24 sm:py-24 lg:py-32">
       <div className="container mx-auto max-w-7xl">
         <div className="grid shrink-0 grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2">
           <div>
-            <h1 className="max-w-2xl text-4xl font-semibold sm:text-5xl">ติดต่อเรา</h1>
+            <h1 className="max-w-2xl text-4xl font-semibold sm:text-5xl">{t('title')}</h1>
             <div className="mt-10 flex max-w-sm flex-col gap-y-8 sm:mt-20">
               {info.map((item, index) => (
                 <div key={index}>
@@ -42,36 +43,32 @@ const PageContact = () => {
                 </div>
               ))}
               <div>
-                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">🌏 โซเชียลมีเดีย</h3>
+                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">🌏 {t('social')}</h3>
                 <SocialsList className="mt-4" />
               </div>
             </div>
           </div>
           <form className="grid grid-cols-1 gap-6" action="#" method="post">
             <Field className="block">
-              <Label>ชื่อ-นามสกุล</Label>
+              <Label>{t('form.fullName')}</Label>
               <Input placeholder="Example Doe" type="text" className="mt-1" />
             </Field>
             <Field className="block">
-              <Label>อีเมล</Label>
+              <Label>{t('form.email')}</Label>
               <Input type="email" placeholder="example@example.com" className="mt-1" />
             </Field>
             <Field className="block">
-              <Label>ข้อความ</Label>
+              <Label>{t('form.message')}</Label>
               <Textarea className="mt-1" rows={6} />
             </Field>
             <div>
-              <ButtonPrimary type="submit">ส่งข้อความ</ButtonPrimary>
+              <ButtonPrimary type="submit">{t('form.submit')}</ButtonPrimary>
             </div>
           </form>
         </div>
       </div>
 
-      {/* OTHER SECTIONS */}
-      <div className="container mt-20 lg:mt-32">
-        <Divider />
-        <SectionSubscribe2 className="mt-20 lg:mt-32" />
-      </div>
+
     </div>
   )
 }

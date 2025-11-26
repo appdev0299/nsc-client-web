@@ -1,9 +1,16 @@
 import BackgroundSection from '@/components/BackgroundSection'
 import NcImage from '@/components/NcImage/NcImage'
 import { Metadata } from 'next'
+import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-    title: 'ความร่วมมือ',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params
+    const t = await getTranslations({ locale, namespace: 'about.partnerships' })
+
+    return {
+        title: t('title'),
+    }
 }
 
 const partners = Array.from({ length: 10 }).map((_, i) => ({
@@ -13,13 +20,15 @@ const partners = Array.from({ length: 10 }).map((_, i) => ({
 }))
 
 const PagePartnerships = () => {
+    const t = useTranslations('about.partnerships')
+
     return (
         <div className="nc-PagePartnerships relative">
             <div className="container relative space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl font-semibold sm:text-4xl">พันธมิตรของเรา</h2>
+                    <h2 className="text-3xl font-semibold sm:text-4xl">{t('title')}</h2>
                     <span className="mt-2 block text-neutral-500 dark:text-neutral-400">
-                        เราร่วมมือกับองค์กรชั้นนำเพื่อให้บริการด้านสุขภาพที่ดีที่สุด
+                        {t('subtitle')}
                     </span>
                 </div>
 

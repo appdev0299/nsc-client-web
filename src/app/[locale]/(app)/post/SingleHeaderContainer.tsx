@@ -1,5 +1,5 @@
 import CategoryBadgeList from '@/components/CategoryBadgeList'
-import { TPostDetail } from '@/data/posts'
+import { TPost, TPostDetail } from '@/data/posts'
 import { Badge } from '@/shared/Badge'
 import { Divider } from '@/shared/divider'
 import clsx from 'clsx'
@@ -14,7 +14,7 @@ import VideoPlayer from './VideoPlayer'
 
 interface Props {
   className?: string
-  post: TPostDetail
+  post: TPost | TPostDetail
   headerStyle?: 'style1' | 'style2' | 'style3' | 'audio' | 'video' | 'gallery'
 }
 
@@ -197,7 +197,7 @@ const HeaderAudio = ({ className, post }: Omit<Props, 'defaultStyle'>) => {
 const HeaderVideo = ({ className, post }: Omit<Props, 'defaultStyle'>) => {
   return (
     <div className={clsx('single-header-style-video', className)}>
-      <VideoPlayer videoUrl={post.videoUrl} />
+      <VideoPlayer videoUrl={post.videoUrl || ''} />
       <div className="container mt-10 pb-5">
         <TitleAndMeta post={post} />
       </div>
@@ -217,7 +217,7 @@ const HeaderGallery = ({ className, post }: Omit<Props, 'defaultStyle'>) => {
             <TitleAndMeta post={post} />
           </div>
         </div>
-        <GalleryImages images={post.galleryImgs} gridType="grid3" />
+        <GalleryImages images={post.galleryImgs || []} gridType="grid3" />
       </div>
     </>
   )

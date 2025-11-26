@@ -4,7 +4,7 @@ import CommentCard from '@/components/CommentCard/CommentCard'
 import PostCardCommentBtn from '@/components/PostCardCommentBtn'
 import PostCardLikeBtn from '@/components/PostCardLikeBtn'
 import SingleCommentForm from '@/components/SingleCommentForm'
-import { TComment, TPostDetail } from '@/data/posts'
+import { TComment, TPost, TPostDetail } from '@/data/posts'
 import useIntersectionObserver from '@/hooks/useIntersectionObserver'
 import Avatar from '@/shared/Avatar'
 import ButtonPrimary from '@/shared/ButtonPrimary'
@@ -18,7 +18,7 @@ import { ShareDropdown } from './SingleMetaAction'
 import TheContent from './TheContent'
 
 interface Props {
-  post: TPostDetail
+  post: TPost | TPostDetail
   comments: TComment[]
   className?: string
 }
@@ -88,7 +88,7 @@ const SingleContentContainer: FC<Props> = ({ post, comments, className }) => {
           className="mx-auto prose max-w-(--breakpoint-md)! lg:prose-lg dark:prose-invert"
           ref={contentRef}
         >
-          <TheContent content={content} />
+          <TheContent content={content || ''} />
         </div>
         <div ref={endedAnchorRef}></div>
       </div>

@@ -25,7 +25,8 @@
     "loading": "Loading...",
     "error": "An error occurred",
     "noResults": "No results found",
-    "readingTime": "{minutes} min read"
+    "readingTime": "{minutes} min read",
+    "showMore": "Show me more"
   },
   "footer": {
     "services": "Services",
@@ -43,5 +44,182 @@
   "metadata": {
     "title": "NSC Clinic - Comprehensive Healthcare Center",
     "description": "Comprehensive healthcare services, online doctor appointments"
+  },
+  "home": {
+    "hero": {
+      "readMore": "Read More",
+      "packages": "Packages",
+      "packagesDesc": "Browse health packages suitable for you",
+      "appointment": "Appointment",
+      "appointmentDesc": "Easily book appointments in advance",
+      "findSpecialist": "Find Specialist",
+      "findSpecialistDesc": "Find doctors and specialists"
+    },
+    "sections": {
+      "ourPackages": "Our Health Packages",
+      "ourPackagesSub": "Discover health packages that cover all your needs",
+      "healthKnowledge": "Health Knowledge",
+      "healthKnowledgeSub": "Latest health articles you should not miss"
+    }
+  },
+  "specialists": {
+    "title": "Specialists",
+    "searchPlaceholder": "Search by name, specialty, or clinic...",
+    "allSpecialists": "All Specialists",
+    "foundCount": "Found {count} specialists",
+    "loading": "Loading...",
+    "generalClinic": "General Clinic"
+  },
+  "appointment": {
+    "title": "Appointment",
+    "comingSoon": "Coming Soon",
+    "returnHome": "Return Home"
+  },
+  "healthKnowledge": {
+    "title": "Health Knowledge",
+    "description": "Discover our latest health articles",
+    "searchPlaceholder": "Search health articles...",
+    "subtitle": "Explore our comprehensive health knowledge library",
+    "tabs": {
+      "posts": "Articles",
+      "categories": "Categories",
+      "tags": "Tags",
+      "authors": "Authors"
+    },
+    "sort": {
+      "mostRecent": "Most Recent",
+      "curatedByAdmin": "Curated by Admin",
+      "mostAppreciated": "Most Appreciated",
+      "mostDiscussed": "Most Discussed",
+      "mostViewed": "Most Viewed",
+      "mostLiked": "Most Liked"
+    }
+  },
+  "booking": {
+    "title": "Booking & Checkout",
+    "subtitle": "Complete your booking in just a few simple steps.",
+    "loading": "Loading...",
+    "steps": {
+      "selectPackage": "Select Package",
+      "dateTime": "Date & Time",
+      "information": "Information",
+      "payment": "Payment",
+      "completion": "Completion"
+    },
+    "step1": {
+      "title": "Select a Package",
+      "searchPlaceholder": "Search packages...",
+      "noPackages": "No packages found matching your criteria.",
+      "categories": {
+        "all": "All",
+        "checkUp": "Check-up",
+        "heart": "Heart",
+        "cancer": "Cancer",
+        "other": "Other"
+      }
+    },
+    "step2": {
+      "title": "Select Date & Time",
+      "subtitle": "Choose a convenient slot for your appointment",
+      "availableSlots": "Available Slots"
+    },
+    "step3": {
+      "title": "Basic Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "note": "Additional Note (Optional)",
+      "placeholders": {
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "email": "example@email.com",
+        "phone": "08x-xxx-xxxx",
+        "note": "Any specific requirements?"
+      }
+    },
+    "step4": {
+      "title": "Payment Method",
+      "qrCode": "QR Code Payment",
+      "qrCodeDesc": "Scan QR code to pay instantly",
+      "creditCard": "Credit / Debit Card",
+      "creditCardDesc": "Pay securely with your credit card",
+      "bankTransfer": "Bank Transfer",
+      "bankTransferDesc": "Transfer directly to our bank account"
+    },
+    "step5": {
+      "success": "Booking Successful!",
+      "thankYou": "Thank you for your booking. We have sent a confirmation email to {email}.",
+      "detailsTitle": "Booking Details",
+      "package": "Package",
+      "dateTime": "Date & Time",
+      "customer": "Customer",
+      "totalPaid": "Total Paid",
+      "backHome": "Back to Home"
+    },
+    "next": "Next",
+    "back": "Back",
+    "confirm": "Confirm Booking"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "social": "Social Media",
+    "form": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send Message"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "hero": {
+      "title": "👋 About Us.",
+      "subtitle": "We’re impartial and independent, and every day we create distinctive, world-class programmes and content"
+    },
+    "newsletter": {
+      "title": "Join our newsletter",
+      "subtitle": "Read and share new perspectives on just about any topic. Everyone’s welcome.",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
+    "partnerships": {
+      "title": "Our Partnerships",
+      "subtitle": "We collaborate with leading organizations to provide the best healthcare services."
+    },
+    "careers": {
+      "title": "Careers",
+      "heading": "Join Our Team",
+      "subtitle": "Join a team committed to improving quality of life through excellent healthcare.",
+      "applyButton": "Apply Now",
+      "jobs": {
+        "seniorMedicalOfficer": "Senior Medical Officer",
+        "registeredNurse": "Registered Nurse",
+        "healthcareAdministrator": "Healthcare Administrator",
+        "physicalTherapist": "Physical Therapist"
+      },
+      "departments": {
+        "medical": "Medical",
+        "nursing": "Nursing",
+        "management": "Management",
+        "physicalTherapy": "Physical Therapy"
+      },
+      "locations": {
+        "bangkok": "Bangkok"
+      },
+      "types": {
+        "fullTime": "Full Time",
+        "partTime": "Part Time"
+      }
+    },
+    "privacy": "We care about your data. Read our privacy policy."
+  },
+  "news": {
+    "title": "News & Articles",
+    "subtitle": "Stay updated with the latest health news and articles"
   }
 }
+```

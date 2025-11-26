@@ -5,13 +5,24 @@ import Card7 from '@/components/PostCards/Card7'
 import { TPost } from '@/data/posts'
 import Input from '@/shared/Input'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { useLocale } from 'next-intl'
 
 interface Clinic {
     id: string
     name: string
 }
 
+const _placeholder_images = [
+    'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=2091&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=2032&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop',
+]
+
 export default function PackagesPage() {
+    const locale = useLocale()
     const [packages, setPackages] = useState<TPost[]>([])
     const [filteredPackages, setFilteredPackages] = useState<TPost[]>([])
     const [clinics, setClinics] = useState<Clinic[]>([])
@@ -24,7 +35,7 @@ export default function PackagesPage() {
         const fetchPackages = async () => {
             setIsLoading(true)
             try {
-                const res = await fetch('http://localhost:3000/packages')
+                const res = await fetch(`http://localhost:3000/packages?lang=${locale}`)
                 if (res.ok) {
                     const data = await res.json()
 
@@ -45,14 +56,14 @@ export default function PackagesPage() {
                         postType: 'standard',
                         status: 'published',
                         featuredImage: {
-                            src: `https://images.unsplash.com/photo-${1576091160399 + index}?q=80&w=2070&auto=format&fit=crop`,
+                            src: _placeholder_images[index % _placeholder_images.length],
                             alt: pkg.name,
                             width: 1920,
                             height: 1080,
                         },
                         author: {
                             id: pkg.clinic?.id || 'clinic-1',
-                            name: pkg.clinic?.name || 'คลินิกทั่วไป',
+                            name: pkg.clinic?.name || (locale === 'th' ? 'คลินิกทั่วไป' : 'General Clinic'),
                             handle: pkg.clinic?.name?.toLowerCase().replace(/\s+/g, '-') || 'general-clinic',
                             avatar: {
                                 src: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop',
@@ -90,7 +101,7 @@ export default function PackagesPage() {
         }
 
         fetchPackages()
-    }, [])
+    }, [locale])
 
     // Apply filters whenever search or clinic filter changes
     useEffect(() => {
@@ -116,10 +127,10 @@ export default function PackagesPage() {
             {/* Header */}
             <header className="mb-12 text-center max-w-3xl mx-auto">
                 <h1 className="text-4xl font-bold text-neutral-900 md:text-5xl dark:text-neutral-100 tracking-tight">
-                    แพ็กเกจสุขภาพทั้งหมด
+                    {locale === 'th' ? 'แพ็กเกจสุขภาพทั้งหมด' : 'All Health Packages'}
                 </h1>
                 <p className="mt-4 text-lg text-neutral-500 dark:text-neutral-400">
-                    พบกับแพ็กเกจตรวจสุขภาพที่ครอบคลุม ออกแบบมาเพื่อความเป็นอยู่ที่ดีของคุณ
+                    {locale === 'th' ? 'พบกับแพ็กเกจตรวจสุขภาพที่ครอบคลุม ออกแบบมาเพื่อความเป็นอยู่ที่ดีของคุณ' : 'Discover comprehensive health packages designed for your well-being.'}
                 </p>
             </header>
 
@@ -131,7 +142,7 @@ export default function PackagesPage() {
                         <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-neutral-400" />
                         <Input
                             type="text"
-                            placeholder="ค้นหาแพ็กเกจตามชื่อ..."
+                            placeholder={locale === 'th' ? 'ค้นหาแพ็กเกจตามชื่อ...' : 'Search packages by name...'}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="pl-12 pr-4 py-3 w-full rounded-2xl border-neutral-200 dark:border-neutral-700 focus:border-primary-600 dark:focus:border-primary-400"
@@ -144,7 +155,7 @@ export default function PackagesPage() {
                         onChange={(e) => setSelectedClinic(e.target.value)}
                         className="px-4 py-3 rounded-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:border-primary-600 dark:focus:border-primary-400 focus:ring-2 focus:ring-primary-600/20 outline-none transition-colors cursor-pointer"
                     >
-                        <option value="all">คลินิกทั้งหมด</option>
+                        <option value="all">{locale === 'th' ? 'คลินิกทั้งหมด' : 'All Clinics'}</option>
                         {clinics.map((clinic) => (
                             <option key={clinic.id} value={clinic.id}>
                                 {clinic.name}
@@ -155,20 +166,20 @@ export default function PackagesPage() {
 
                 {/* Results Counter */}
                 <div className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                    แสดง {filteredPackages.length} จาก {packages.length} แพ็กเกจ
+                    {locale === 'th' ? `แสดง ${filteredPackages.length} จาก ${packages.length} แพ็กเกจ` : `Showing ${filteredPackages.length} of ${packages.length} packages`}
                 </div>
             </div>
 
             {/* Packages Grid */}
             {isLoading ? (
                 <div className="flex items-center justify-center py-20">
-                    <div className="text-neutral-500 dark:text-neutral-400">กำลังโหลดแพ็กเกจ...</div>
+                    <div className="text-neutral-500 dark:text-neutral-400">{locale === 'th' ? 'กำลังโหลดแพ็กเกจ...' : 'Loading packages...'}</div>
                 </div>
             ) : filteredPackages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-20">
                     <div className="text-neutral-500 dark:text-neutral-400 text-center">
-                        <p className="text-lg font-medium mb-2">ไม่พบแพ็กเกจ</p>
-                        <p className="text-sm">ลองปรับเปลี่ยนคำค้นหาหรือตัวกรองของคุณ</p>
+                        <p className="text-lg font-medium mb-2">{locale === 'th' ? 'ไม่พบแพ็กเกจ' : 'No packages found'}</p>
+                        <p className="text-sm">{locale === 'th' ? 'ลองปรับเปลี่ยนคำค้นหาหรือตัวกรองของคุณ' : 'Try adjusting your search or filters'}</p>
                     </div>
                 </div>
             ) : (

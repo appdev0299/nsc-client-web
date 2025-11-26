@@ -1,49 +1,58 @@
 import ButtonPrimary from '@/shared/ButtonPrimary'
 import { Metadata } from 'next'
+import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export const metadata: Metadata = {
-    title: 'ร่วมงานกับเรา',
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+    const { locale } = await params
+    const t = await getTranslations({ locale, namespace: 'about.careers' })
+
+    return {
+        title: t('title'),
+    }
 }
 
-const jobs = [
-    {
-        id: 1,
-        title: 'เจ้าหน้าที่การแพทย์อาวุโส',
-        department: 'การแพทย์',
-        location: 'กรุงเทพมหานคร',
-        type: 'งานประจำ',
-    },
-    {
-        id: 2,
-        title: 'พยาบาลวิชาชีพ',
-        department: 'การพยาบาล',
-        location: 'กรุงเทพมหานคร',
-        type: 'งานประจำ',
-    },
-    {
-        id: 3,
-        title: 'ผู้บริหารสถานพยาบาล',
-        department: 'บริหารจัดการ',
-        location: 'กรุงเทพมหานคร',
-        type: 'งานประจำ',
-    },
-    {
-        id: 4,
-        title: 'นักกายภาพบำบัด',
-        department: 'กายภาพบำบัด',
-        location: 'กรุงเทพมหานคร',
-        type: 'พาร์ทไทม์',
-    },
-]
-
 const PageCareers = () => {
+    const t = useTranslations('about.careers')
+
+    const jobs = [
+        {
+            id: 1,
+            title: t('jobs.seniorMedicalOfficer'),
+            department: t('departments.medical'),
+            location: t('locations.bangkok'),
+            type: t('types.fullTime'),
+        },
+        {
+            id: 2,
+            title: t('jobs.registeredNurse'),
+            department: t('departments.nursing'),
+            location: t('locations.bangkok'),
+            type: t('types.fullTime'),
+        },
+        {
+            id: 3,
+            title: t('jobs.healthcareAdministrator'),
+            department: t('departments.management'),
+            location: t('locations.bangkok'),
+            type: t('types.fullTime'),
+        },
+        {
+            id: 4,
+            title: t('jobs.physicalTherapist'),
+            department: t('departments.physicalTherapy'),
+            location: t('locations.bangkok'),
+            type: t('types.partTime'),
+        },
+    ]
+
     return (
         <div className="nc-PageCareers relative">
             <div className="container relative space-y-16 py-16 lg:space-y-28 lg:py-28">
                 <div className="max-w-2xl">
-                    <h2 className="text-3xl font-semibold sm:text-4xl">ร่วมทีมกับเรา</h2>
+                    <h2 className="text-3xl font-semibold sm:text-4xl">{t('heading')}</h2>
                     <span className="mt-2 block text-neutral-500 dark:text-neutral-400">
-                        เป็นส่วนหนึ่งของทีมที่มุ่งมั่นพัฒนาคุณภาพชีวิตผ่านการดูแลสุขภาพที่ยอดเยี่ยม
+                        {t('subtitle')}
                     </span>
                 </div>
 
@@ -64,7 +73,7 @@ const PageCareers = () => {
                                 <span>{job.type}</span>
                             </div>
                             <div className="mt-auto">
-                                <ButtonPrimary href="#">สมัครเลย</ButtonPrimary>
+                                <ButtonPrimary href="#">{t('applyButton')}</ButtonPrimary>
                             </div>
                         </div>
                     ))}

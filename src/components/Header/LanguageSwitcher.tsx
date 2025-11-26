@@ -4,6 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import { useLocale } from 'next-intl'
 import { usePathname, useRouter } from '@/i18n/routing'
+import { useSearchParams } from 'next/navigation'
 import { locales, localeNames, type Locale } from '@/i18n/config'
 import { useTransition } from 'react'
 
@@ -13,9 +14,12 @@ export default function LanguageSwitcher({ className }: { className?: string }) 
     const pathname = usePathname()
     const [isPending, startTransition] = useTransition()
 
+    const searchParams = useSearchParams()
+
     const handleLanguageChange = (newLocale: Locale) => {
         startTransition(() => {
-            router.replace(pathname, { locale: newLocale })
+            const params = new URLSearchParams(searchParams.toString())
+            router.replace(`${pathname}?${params.toString()}`, { locale: newLocale })
         })
     }
 

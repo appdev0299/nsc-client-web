@@ -17,6 +17,7 @@ import { EmblaOptionsType } from 'embla-carousel'
 import useEmblaCarousel from 'embla-carousel-react'
 import { FC, useContext } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 interface Props extends Pick<HeadingWithSubProps, 'subHeading' | 'dimHeading'> {
   className?: string
@@ -43,6 +44,7 @@ const SectionSliderPosts: FC<Props> = ({
     slidesToScroll: 'auto',
   },
 }) => {
+  const t = useTranslations('common')
   const theme = useContext(ThemeContext)
   const [emblaRef, emblaApi] = useEmblaCarousel({ ...emblaOptions, direction: theme?.themeDir })
   const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } = useCarouselArrowButtons(emblaApi)
@@ -80,7 +82,7 @@ const SectionSliderPosts: FC<Props> = ({
               href={viewAllHref}
               className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 transition-all hover:gap-2 dark:text-primary-400"
             >
-              <span>ดูทั้งหมด</span>
+              <span>{t('viewAll')}</span>
               <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

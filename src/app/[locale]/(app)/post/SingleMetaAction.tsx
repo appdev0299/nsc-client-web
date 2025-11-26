@@ -3,7 +3,7 @@
 import BookmarkBtn from '@/components/BookmarkBtn'
 import PostCardCommentBtn from '@/components/PostCardCommentBtn'
 import PostCardLikeBtn from '@/components/PostCardLikeBtn'
-import { TPostDetail } from '@/data/posts'
+import { TPost, TPostDetail } from '@/data/posts'
 import { Button } from '@/shared/Button'
 import { Dialog, DialogActions, DialogBody, DialogTitle } from '@/shared/dialog'
 import { Dropdown, DropdownButton, DropdownItem, DropdownMenu } from '@/shared/dropdown'
@@ -22,7 +22,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import clsx from 'clsx'
 import { FC, useState } from 'react'
 
-function ActionDropdown({ handle, title, author }: { handle: string; title: string; author: TPostDetail['author'] }) {
+function ActionDropdown({ handle, title, author }: { handle: string; title: string; author: TPost['author'] | TPostDetail['author'] }) {
   const [isOpenDialogHideAuthor, setIsOpenDialogHideAuthor] = useState(false)
   const [isOpenDialogReportPost, setIsOpenDialogReportPost] = useState(false)
 
@@ -159,7 +159,7 @@ function ShareDropdown({ handle }: { handle: string }) {
   )
 }
 
-interface Props extends Pick<TPostDetail, 'likeCount' | 'liked' | 'commentCount' | 'handle' | 'title' | 'author'> {
+interface Props extends Pick<TPost | TPostDetail, 'likeCount' | 'liked' | 'commentCount' | 'handle' | 'title' | 'author'> {
   className?: string
 }
 

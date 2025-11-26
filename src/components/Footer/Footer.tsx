@@ -19,11 +19,9 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: '1',
     titleKey: 'footer.services',
     menus: [
-      { href: '/clinics/bd2a07b5-d294-4604-b78f-c7aa21ce293c', labelKey: 'nav.clinicWarm' },
-      { href: '/clinics/b2cd8439-1224-47a2-9a88-1cf0a02628b2', labelKey: 'nav.clinicComfortable' },
-      { href: '/clinics/804f5d20-5e79-45c6-8565-12963dc065f9', labelKey: 'nav.clinicFamilyWarm' },
+      { href: '/clinics', labelKey: 'nav.clinics' },
       { href: '/appointment', labelKey: 'nav.appointment' },
-      { href: '/find-expert', labelKey: 'nav.findSpecialist' },
+      { href: '/specialists', labelKey: 'nav.findSpecialist' },
       { href: '/packages', labelKey: 'nav.packages' },
     ],
   },
@@ -32,7 +30,7 @@ const widgetMenus: WidgetFooterMenu[] = [
     titleKey: 'footer.aboutUs',
     menus: [
       { href: '/about/general', labelKey: 'nav.generalInfo' },
-      { href: '/about/clinics', labelKey: 'nav.clinicInfo' },
+      { href: '/clinics', labelKey: 'nav.clinicInfo' },
       { href: '/about/partnerships', labelKey: 'nav.partnerships' },
       { href: '/about/careers', labelKey: 'nav.careers' },
       { href: '/contact', labelKey: 'nav.contact' },

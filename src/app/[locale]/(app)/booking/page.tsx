@@ -15,6 +15,7 @@ import { DayPicker } from 'react-day-picker'
 import "react-day-picker/style.css"
 import '@/styles/datepicker-custom.css'
 import BookingBottomBar from './BookingBottomBar'
+import { useTranslations } from 'next-intl'
 
 // Mock Data for Step 1 (Fallback)
 const MOCK_PACKAGES = [
@@ -48,12 +49,13 @@ const TIME_SLOTS = [
 
 // Placeholder images for fetched packages
 const _placeholder_images = [
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=2091&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=2032&auto=format&fit=crop',
 ]
 
 function BookingContent() {
+    const t = useTranslations('booking')
     const searchParams = useSearchParams()
     const packageId = searchParams.get('packageId')
 
@@ -159,11 +161,11 @@ function BookingContent() {
 
     const renderStepIndicator = () => {
         const steps = [
-            'Select Package',
-            'Date & Time',
-            'Information',
-            'Payment',
-            'Completion',
+            t('steps.selectPackage'),
+            t('steps.dateTime'),
+            t('steps.information'),
+            t('steps.payment'),
+            t('steps.completion'),
         ]
 
         return (
@@ -239,12 +241,12 @@ function BookingContent() {
     const renderStep1 = () => (
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Select a Package</h2>
+                <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{t('step1.title')}</h2>
 
                 {/* Search & Filter */}
                 <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                     <Input
-                        placeholder="Search packages..."
+                        placeholder={t('step1.searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full sm:w-64"
@@ -301,7 +303,7 @@ function BookingContent() {
                     ))
                 ) : (
                     <div className="col-span-full text-center py-12 text-neutral-500">
-                        No packages found matching your criteria.
+                        {t('step1.noPackages')}
                     </div>
                 )}
             </div>
@@ -312,8 +314,8 @@ function BookingContent() {
     const renderStep2 = () => (
         <div className="space-y-12 animate-fade-in-up">
             <div className="text-center space-y-2">
-                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Select Date & Time</h2>
-                <p className="text-neutral-500 dark:text-neutral-400">Choose a convenient slot for your appointment</p>
+                <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('step2.title')}</h2>
+                <p className="text-neutral-500 dark:text-neutral-400">{t('step2.subtitle')}</p>
             </div>
 
             <div className="grid gap-12 md:grid-cols-2 items-start">
@@ -335,7 +337,7 @@ function BookingContent() {
 
                 {/* Time Selection */}
                 <div className="space-y-6">
-                    <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">Available Slots</h3>
+                    <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">{t('step2.availableSlots')}</h3>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {TIME_SLOTS.map((time) => (
                             <button
@@ -360,21 +362,21 @@ function BookingContent() {
     // --- Step 3: Basic Information ---
     const renderStep3 = () => (
         <div className="mx-auto max-w-2xl space-y-8">
-            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Basic Information</h2>
+            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{t('step3.title')}</h2>
             <div className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900 space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
                     <Field>
-                        <Label>First Name</Label>
+                        <Label>{t('step3.firstName')}</Label>
                         <Input
-                            placeholder="Enter your first name"
+                            placeholder={t('step3.placeholders.firstName')}
                             value={bookingData.userInfo.firstName}
                             onChange={(e) => updateBookingData({ userInfo: { ...bookingData.userInfo, firstName: e.target.value } })}
                         />
                     </Field>
                     <Field>
-                        <Label>Last Name</Label>
+                        <Label>{t('step3.lastName')}</Label>
                         <Input
-                            placeholder="Enter your last name"
+                            placeholder={t('step3.placeholders.lastName')}
                             value={bookingData.userInfo.lastName}
                             onChange={(e) => updateBookingData({ userInfo: { ...bookingData.userInfo, lastName: e.target.value } })}
                         />
@@ -382,29 +384,29 @@ function BookingContent() {
                 </div>
 
                 <Field>
-                    <Label>Email Address</Label>
+                    <Label>{t('step3.email')}</Label>
                     <Input
                         type="email"
-                        placeholder="example@email.com"
+                        placeholder={t('step3.placeholders.email')}
                         value={bookingData.userInfo.email}
                         onChange={(e) => updateBookingData({ userInfo: { ...bookingData.userInfo, email: e.target.value } })}
                     />
                 </Field>
 
                 <Field>
-                    <Label>Phone Number</Label>
+                    <Label>{t('step3.phone')}</Label>
                     <Input
                         type="tel"
-                        placeholder="08x-xxx-xxxx"
+                        placeholder={t('step3.placeholders.phone')}
                         value={bookingData.userInfo.phone}
                         onChange={(e) => updateBookingData({ userInfo: { ...bookingData.userInfo, phone: e.target.value } })}
                     />
                 </Field>
 
                 <Field>
-                    <Label>Additional Note (Optional)</Label>
+                    <Label>{t('step3.note')}</Label>
                     <Input
-                        placeholder="Any specific requirements?"
+                        placeholder={t('step3.placeholders.note')}
                         value={bookingData.userInfo.note}
                         onChange={(e) => updateBookingData({ userInfo: { ...bookingData.userInfo, note: e.target.value } })}
                     />
@@ -416,7 +418,7 @@ function BookingContent() {
     // --- Step 4: Payment ---
     const renderStep4 = () => (
         <div className="space-y-8">
-            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">Payment Method</h2>
+            <h2 className="text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{t('step4.title')}</h2>
 
             <div className="rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-900">
                 <RadioGroup
@@ -427,15 +429,15 @@ function BookingContent() {
                     <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
                         <Radio value="qr_code" color="indigo" />
                         <div className="flex-1">
-                            <Label className="cursor-pointer">QR Code Payment</Label>
-                            <p className="text-sm text-neutral-500">Scan QR code to pay instantly</p>
+                            <Label className="cursor-pointer">{t('step4.qrCode')}</Label>
+                            <p className="text-sm text-neutral-500">{t('step4.qrCodeDesc')}</p>
                         </div>
                     </Field>
                     <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
                         <Radio value="credit_card" color="indigo" />
                         <div className="flex-1">
-                            <Label className="cursor-pointer">Credit / Debit Card</Label>
-                            <p className="text-sm text-neutral-500">Pay securely with your credit card</p>
+                            <Label className="cursor-pointer">{t('step4.creditCard')}</Label>
+                            <p className="text-sm text-neutral-500">{t('step4.creditCardDesc')}</p>
                         </div>
                         <div className="flex gap-2">
                             {/* Mock Card Icons */}
@@ -446,8 +448,8 @@ function BookingContent() {
                     <Field className="flex items-start sm:items-center gap-3 p-4 border border-neutral-200 rounded-xl cursor-pointer hover:bg-neutral-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
                         <Radio value="bank_transfer" color="indigo" />
                         <div className="flex-1">
-                            <Label className="cursor-pointer">Bank Transfer</Label>
-                            <p className="text-sm text-neutral-500">Transfer directly to our bank account</p>
+                            <Label className="cursor-pointer">{t('step4.bankTransfer')}</Label>
+                            <p className="text-sm text-neutral-500">{t('step4.bankTransferDesc')}</p>
                         </div>
                     </Field>
                 </RadioGroup>
@@ -461,51 +463,54 @@ function BookingContent() {
             <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-900/30">
                 <CheckCircleIcon className="h-12 w-12" />
             </div>
-            <h2 className="mb-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">Booking Successful!</h2>
+            <h2 className="mb-2 text-3xl font-bold text-neutral-900 dark:text-neutral-100">{t('step5.success')}</h2>
             <p className="mb-8 max-w-md text-neutral-600 dark:text-neutral-400">
-                Thank you for your booking. We have sent a confirmation email to <strong>{bookingData.userInfo.email}</strong>.
+                {t.rich('step5.thankYou', {
+                    email: bookingData.userInfo.email,
+                    strong: (chunks) => <strong>{chunks}</strong>
+                })}
             </p>
 
             <div className="rounded-2xl border border-neutral-200 bg-white p-6 text-left shadow-sm dark:border-neutral-700 dark:bg-neutral-900 w-full max-w-md mb-8">
-                <h3 className="text-lg font-semibold mb-4 border-b pb-2">Booking Details</h3>
+                <h3 className="text-lg font-semibold mb-4 border-b pb-2">{t('step5.detailsTitle')}</h3>
                 <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
-                        <span className="text-neutral-500">Package</span>
+                        <span className="text-neutral-500">{t('step5.package')}</span>
                         <span className="font-medium text-right">{bookingData.selectedPackage?.name}</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-neutral-500">Date & Time</span>
+                        <span className="text-neutral-500">{t('step5.dateTime')}</span>
                         <span className="font-medium">
                             {bookingData.selectedDate ? bookingData.selectedDate.toLocaleDateString('th-TH') : '-'} at {bookingData.selectedTime}
                         </span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-neutral-500">Customer</span>
+                        <span className="text-neutral-500">{t('step5.customer')}</span>
                         <span className="font-medium">{bookingData.userInfo.firstName} {bookingData.userInfo.lastName}</span>
                     </div>
                     <div className="flex justify-between pt-2 border-t font-bold text-lg">
-                        <span>Total Paid</span>
+                        <span>{t('step5.totalPaid')}</span>
                         <span className="text-primary-600">฿{bookingData.selectedPackage?.price.toLocaleString()}</span>
                     </div>
                 </div>
             </div>
 
-            <ButtonPrimary href="/">Back to Home</ButtonPrimary>
+            <ButtonPrimary href="/">{t('step5.backHome')}</ButtonPrimary>
         </div>
     )
 
     if (isLoadingPackage) {
-        return <div className="flex h-screen items-center justify-center">Loading package details...</div>
+        return <div className="flex h-screen items-center justify-center">{t('loading')}</div>
     }
 
     return (
         <div className="container py-10 lg:py-24 pb-32">
             <header className="mb-8 lg:mb-16 text-center max-w-2xl mx-auto">
                 <h1 className="text-3xl font-bold text-neutral-900 md:text-5xl dark:text-neutral-100 tracking-tight">
-                    Booking & Checkout
+                    {t('title')}
                 </h1>
                 <p className="mt-4 text-base md:text-lg text-neutral-500 dark:text-neutral-400">
-                    Complete your booking in just a few simple steps.
+                    {t('subtitle')}
                 </p>
             </header>
 

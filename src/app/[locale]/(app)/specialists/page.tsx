@@ -7,15 +7,19 @@ import { Search01Icon, UserListIcon, StethoscopeIcon, Hospital01Icon, UserCircle
 import SpecialistCard, { Specialist } from '@/components/SpecialistCard'
 import ArchiveTabs from '@/components/ArchiveTabs'
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-
-// Initial default tab
-const defaultTabs = [
-    { name: 'ผู้เชี่ยวชาญทั้งหมด', value: 'all', icon: UserListIcon },
-]
+import { useLocale, useTranslations } from 'next-intl'
 
 function SpecialistsContent() {
+    const locale = useLocale()
+    const t = useTranslations('specialists')
     const [specialists, setSpecialists] = useState<Specialist[]>([])
     const [filteredSpecialists, setFilteredSpecialists] = useState<Specialist[]>([])
+
+    // Initial default tab based on locale
+    const defaultTabs = [
+        { name: t('allSpecialists'), value: 'all', icon: UserListIcon },
+    ]
+
     const [tabs, setTabs] = useState(defaultTabs)
     const [isLoading, setIsLoading] = useState(true)
 
@@ -31,7 +35,7 @@ function SpecialistsContent() {
         const fetchSpecialists = async () => {
             setIsLoading(true)
             try {
-                const res = await fetch('http://localhost:3000/staff')
+                const res = await fetch(`http://localhost:3000/staff?lang=${locale}`)
                 if (res.ok) {
                     const data = await res.json()
                     const mapped: Specialist[] = data.map((item: any) => ({
@@ -41,7 +45,7 @@ function SpecialistsContent() {
                         image: item.image || 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=2070',
                         clinic: {
                             id: item.clinic?.id || 'clinic-1',
-                            name: item.clinic?.name || 'คลินิกทั่วไป'
+                            name: item.clinic?.name || t('generalClinic')
                         },
                         role: (item.role || item.specialization || '').toLowerCase()
                     }))
@@ -53,7 +57,9 @@ function SpecialistsContent() {
                         if (s.role) uniqueRoles.add(s.role)
                     })
 
-                    const generatedTabs = [...defaultTabs]
+                    const generatedTabs = [
+                        { name: t('allSpecialists'), value: 'all', icon: UserListIcon }
+                    ]
 
                     // Sort roles alphabetically for better UX
                     Array.from(uniqueRoles).sort().forEach(role => {
@@ -82,7 +88,7 @@ function SpecialistsContent() {
             }
         }
         fetchSpecialists()
-    }, [])
+    }, [locale, t])
 
     // Filter logic
     useEffect(() => {
@@ -136,7 +142,7 @@ function SpecialistsContent() {
                                 id="s"
                                 name="s"
                                 type="search"
-                                placeholder="ค้นหาตามชื่อ, ความเชี่ยวชาญ หรือคลินิก..."
+                                placeholder={t('searchPlaceholder')}
                                 className="rounded-full shadow-lg"
                                 sizeClass="ps-14 py-5 pe-5 md:ps-16"
                                 value={searchQuery}
@@ -148,7 +154,7 @@ function SpecialistsContent() {
                         </label>
                     </div>
                     <p className="mt-4 block text-sm text-center text-neutral-500">
-                        พบผู้เชี่ยวชาญ {filteredSpecialists.length} ท่าน
+                        {t('foundCount', { count: filteredSpecialists.length })}
                     </p>
                 </header>
             </div>
@@ -175,8 +181,9 @@ function SpecialistsContent() {
 }
 
 export default function SpecialistsPage() {
+    const locale = useLocale()
     return (
-        <Suspense fallback={<div>กำลังโหลด...</div>}>
+        <Suspense fallback={<div>{locale === 'th' ? 'กำลังโหลด...' : 'Loading...'}</div>}>
             <SpecialistsContent />
         </Suspense>
     )

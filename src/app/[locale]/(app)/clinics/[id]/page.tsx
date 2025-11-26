@@ -26,15 +26,72 @@ interface Clinic {
     tagline: string
 }
 
+const _placeholder_images = [
+    'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?q=80&w=2091&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=2032&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop',
+]
+
 export default function ClinicProfilePage() {
     const params = useParams()
     const clinicId = params.id as string
+    const locale = (params.locale as string) || 'th'
 
     const [clinic, setClinic] = useState<Clinic | null>(null)
     const [packages, setPackages] = useState<TPost[]>([])
     const [staff, setStaff] = useState<Specialist[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [activeTab, setActiveTab] = useState('about')
+
+    const DICTIONARY = {
+        th: {
+            about: 'เกี่ยวกับเรา',
+            packages: 'แพ็กเกจสุขภาพ',
+            staff: 'บุคลากรทางการแพทย์',
+            contact: 'ข้อมูลการติดต่อ',
+            address: 'ที่อยู่',
+            phone: 'เบอร์โทรศัพท์',
+            email: 'อีเมล',
+            openingHours: 'เวลาทำการ',
+            map: 'แผนที่',
+            rating: 'คะแนน',
+            noPackages: 'ไม่มีแพ็กเกจให้บริการในขณะนี้',
+            noStaff: 'ยังไม่มีข้อมูลบุคลากรในขณะนี้',
+            loading: 'กำลังโหลดข้อมูลคลินิก...',
+            notFound: 'ไม่พบข้อมูลคลินิก',
+            defaultDesc: 'ยินดีต้อนรับสู่คลินิกของเรา',
+            defaultAddr: 'กรุงเทพมหานคร, ประเทศไทย',
+            defaultPhone: 'ติดต่อสอบถามข้อมูลเพิ่มเติม',
+            defaultHours: 'จันทร์ - ศุกร์: 09:00 - 17:00 น.',
+            tagline: 'ผู้ดูแลสุขภาพที่คุณไว้วางใจ'
+        },
+        en: {
+            about: 'About Us',
+            packages: 'Health Packages',
+            staff: 'Medical Staff',
+            contact: 'Contact Information',
+            address: 'Address',
+            phone: 'Phone',
+            email: 'Email',
+            openingHours: 'Opening Hours',
+            map: 'Map',
+            rating: 'Rating',
+            noPackages: 'No packages available at the moment',
+            noStaff: 'No staff information available at the moment',
+            loading: 'Loading clinic data...',
+            notFound: 'Clinic not found',
+            defaultDesc: 'Welcome to our clinic',
+            defaultAddr: 'Bangkok, Thailand',
+            defaultPhone: 'Contact for more information',
+            defaultHours: 'Mon - Fri: 09:00 - 17:00',
+            tagline: 'Your trusted healthcare provider'
+        }
+    }
+
+    const t = DICTIONARY[locale as keyof typeof DICTIONARY] || DICTIONARY.th
 
     useEffect(() => {
         const fetchClinicData = async () => {
@@ -44,7 +101,7 @@ export default function ClinicProfilePage() {
                 // Try fetching specific clinic first
                 let clinicData = null;
                 try {
-                    const clinicRes = await fetch(`http://localhost:3000/clinics/${clinicId}`)
+                    const clinicRes = await fetch(`http://localhost:3000/clinics/${clinicId}?lang=${locale}`)
                     if (clinicRes.ok) {
                         clinicData = await clinicRes.json()
                     }
@@ -54,7 +111,7 @@ export default function ClinicProfilePage() {
 
                 // If direct fetch failed, try fetching list and finding
                 if (!clinicData) {
-                    const allClinicsRes = await fetch('http://localhost:3000/clinics')
+                    const allClinicsRes = await fetch(`http://localhost:3000/clinics?lang=${locale}`)
                     if (allClinicsRes.ok) {
                         const allClinics = await allClinicsRes.json()
                         clinicData = allClinics.find((c: any) => c.id === clinicId)
@@ -65,21 +122,21 @@ export default function ClinicProfilePage() {
                     setClinic({
                         id: clinicData.id,
                         name: clinicData.name,
-                        description: clinicData.description || 'ยินดีต้อนรับสู่คลินิกของเรา',
-                        address: clinicData.address || 'กรุงเทพมหานคร, ประเทศไทย',
-                        phone: clinicData.phone || 'ติดต่อสอบถามข้อมูลเพิ่มเติม',
+                        description: clinicData.description || t.defaultDesc,
+                        address: clinicData.address || t.defaultAddr,
+                        phone: clinicData.phone || t.defaultPhone,
                         email: clinicData.email || 'contact@clinic.com',
-                        openingHours: clinicData.openingHours || 'จันทร์ - ศุกร์: 09:00 - 17:00 น.',
+                        openingHours: clinicData.openingHours || t.defaultHours,
                         coverImage: clinicData.image || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2070&auto=format&fit=crop',
                         logo: clinicData.image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=2070&auto=format&fit=crop',
                         rating: 4.8,
-                        location: 'กรุงเทพมหานคร, ประเทศไทย',
-                        tagline: 'ผู้ดูแลสุขภาพที่คุณไว้วางใจ',
+                        location: t.defaultAddr,
+                        tagline: t.tagline,
                     })
                 }
 
                 // 2. Fetch Packages for this clinic
-                const packagesRes = await fetch('http://localhost:3000/packages')
+                const packagesRes = await fetch(`http://localhost:3000/packages?lang=${locale}`)
                 if (packagesRes.ok) {
                     const allPackages = await packagesRes.json()
                     const clinicPackages = allPackages.filter((pkg: any) => pkg.clinic?.id === clinicId)
@@ -100,7 +157,7 @@ export default function ClinicProfilePage() {
                         postType: 'standard',
                         status: 'published',
                         featuredImage: {
-                            src: pkg.image || `https://images.unsplash.com/photo-${1576091160399 + index}?q=80&w=2070&auto=format&fit=crop`,
+                            src: pkg.image || _placeholder_images[index % _placeholder_images.length],
                             alt: pkg.name,
                             width: 1920,
                             height: 1080,
@@ -131,7 +188,7 @@ export default function ClinicProfilePage() {
 
                 // 3. Fetch Staff for this clinic
                 try {
-                    const staffRes = await fetch(`http://localhost:3000/staff`)
+                    const staffRes = await fetch(`http://localhost:3000/staff?lang=${locale}`)
                     if (staffRes.ok) {
                         const allStaff = await staffRes.json()
                         // Filter staff for this clinic
@@ -165,12 +222,12 @@ export default function ClinicProfilePage() {
         if (clinicId) {
             fetchClinicData()
         }
-    }, [clinicId])
+    }, [clinicId, locale])
 
     if (isLoading) {
         return (
             <div className="flex min-h-screen items-center justify-center">
-                <div className="text-neutral-500 dark:text-neutral-400">กำลังโหลดข้อมูลคลินิก...</div>
+                <div className="text-neutral-500 dark:text-neutral-400">{t.loading}</div>
             </div>
         )
     }
@@ -178,7 +235,7 @@ export default function ClinicProfilePage() {
     if (!clinic) {
         return (
             <div className="flex min-h-screen items-center justify-center">
-                <div className="text-neutral-500 dark:text-neutral-400">ไม่พบข้อมูลคลินิก</div>
+                <div className="text-neutral-500 dark:text-neutral-400">{t.notFound}</div>
             </div>
         )
     }
@@ -219,7 +276,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-center gap-1">
                                     <StarIcon className="h-5 w-5 text-yellow-400" />
                                     <span className="font-semibold">{clinic.rating}</span>
-                                    <span className="text-sm text-neutral-300">คะแนน</span>
+                                    <span className="text-sm text-neutral-300">{t.rating}</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 text-sm text-neutral-300">
                                     <MapPinIcon className="h-4 w-4" />
@@ -249,9 +306,9 @@ export default function ClinicProfilePage() {
                                             : 'text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200'
                                     )}
                                 >
-                                    {tab === 'about' && 'เกี่ยวกับเรา'}
-                                    {tab === 'packages' && 'แพ็กเกจสุขภาพ'}
-                                    {tab === 'staff' && 'บุคลากรทางการแพทย์'}
+                                    {tab === 'about' && t.about}
+                                    {tab === 'packages' && t.packages}
+                                    {tab === 'staff' && t.staff}
                                     {activeTab === tab && (
                                         <span className="absolute bottom-0 left-0 h-0.5 w-full bg-primary-600 dark:bg-primary-500" />
                                     )}
@@ -263,7 +320,7 @@ export default function ClinicProfilePage() {
                         <div className="mt-8">
                             {activeTab === 'about' && (
                                 <section className="animate-fade-in">
-                                    <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">เกี่ยวกับเรา</h2>
+                                    <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">{t.about}</h2>
                                     <div className="prose dark:prose-invert max-w-none">
                                         <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed">
                                             {clinic.description}
@@ -275,10 +332,10 @@ export default function ClinicProfilePage() {
                             {activeTab === 'packages' && (
                                 <section className="animate-fade-in">
                                     <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">
-                                        แพ็กเกจสุขภาพของเรา
+                                        {t.packages}
                                     </h2>
                                     {packages.length === 0 ? (
-                                        <p className="text-neutral-500 dark:text-neutral-400">ไม่มีแพ็กเกจให้บริการในขณะนี้</p>
+                                        <p className="text-neutral-500 dark:text-neutral-400">{t.noPackages}</p>
                                     ) : (
                                         <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
                                             {packages.map((pkg) => (
@@ -292,10 +349,10 @@ export default function ClinicProfilePage() {
                             {activeTab === 'staff' && (
                                 <section className="animate-fade-in">
                                     <h2 className="mb-6 text-2xl font-bold text-neutral-900 dark:text-neutral-100">
-                                        บุคลากรทางการแพทย์
+                                        {t.staff}
                                     </h2>
                                     {staff.length === 0 ? (
-                                        <p className="text-neutral-500 dark:text-neutral-400">ยังไม่มีข้อมูลบุคลากรในขณะนี้</p>
+                                        <p className="text-neutral-500 dark:text-neutral-400">{t.noStaff}</p>
                                     ) : (
                                         <div className="grid gap-6 sm:grid-cols-2 xl:gap-8">
                                             {staff.map((member) => (
@@ -312,12 +369,12 @@ export default function ClinicProfilePage() {
                     <div className="space-y-6">
                         {/* Contact Info Card */}
                         <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                            <h3 className="mb-4 text-xl font-bold text-neutral-900 dark:text-neutral-100">ข้อมูลการติดต่อ</h3>
+                            <h3 className="mb-4 text-xl font-bold text-neutral-900 dark:text-neutral-100">{t.contact}</h3>
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
                                     <MapPinIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">ที่อยู่</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{t.address}</p>
                                         <p className="text-sm text-neutral-600 dark:text-neutral-400">{clinic.address}</p>
                                     </div>
                                 </div>
@@ -325,7 +382,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <PhoneIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">เบอร์โทรศัพท์</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{t.phone}</p>
                                         <a href={`tel:${clinic.phone}`} className="text-sm text-primary-600 hover:underline">
                                             {clinic.phone}
                                         </a>
@@ -335,7 +392,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <EnvelopeIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">อีเมล</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{t.email}</p>
                                         <a href={`mailto:${clinic.email}`} className="text-sm text-primary-600 hover:underline">
                                             {clinic.email}
                                         </a>
@@ -345,7 +402,7 @@ export default function ClinicProfilePage() {
                                 <div className="flex items-start gap-3">
                                     <ClockIcon className="h-5 w-5 flex-shrink-0 text-primary-600" />
                                     <div>
-                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">เวลาทำการ</p>
+                                        <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">{t.openingHours}</p>
                                         <p className="text-sm text-neutral-600 dark:text-neutral-400">{clinic.openingHours}</p>
                                     </div>
                                 </div>
@@ -354,7 +411,7 @@ export default function ClinicProfilePage() {
 
                         {/* Google Map Embed */}
                         <div className="rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                            <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">แผนที่</h3>
+                            <h3 className="mb-3 text-lg font-bold text-neutral-900 dark:text-neutral-100">{t.map}</h3>
                             <div className="aspect-video w-full overflow-hidden rounded-xl bg-neutral-100 dark:bg-neutral-800">
                                 <iframe
                                     src={`https://www.google.com/maps?q=${encodeURIComponent(clinic.address)}&output=embed`}

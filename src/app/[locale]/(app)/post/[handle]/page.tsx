@@ -4,9 +4,9 @@ import { Metadata } from 'next'
 import SingleContentContainer from '../SingleContentContainer'
 import SingleHeaderContainer from '../SingleHeaderContainer'
 
-export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }): Promise<Metadata> {
-  const { handle } = await params
-  const post = await getPostByHandleFromApi(handle)
+export async function generateMetadata({ params }: { params: Promise<{ handle: string, locale: string }> }): Promise<Metadata> {
+  const { handle, locale } = await params
+  const post = await getPostByHandleFromApi(handle, locale)
   if (!post) {
     return {
       title: 'Post not found',
@@ -19,9 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ handle: s
   }
 }
 
-const Page = async ({ params }: { params: Promise<{ handle: string }> }) => {
-  const { handle } = await params
-  const post = await getPostByHandleFromApi(handle)
+const Page = async ({ params }: { params: Promise<{ handle: string, locale: string }> }) => {
+  const { handle, locale } = await params
+  const post = await getPostByHandleFromApi(handle, locale)
   if (!post) {
     return <div>Post not found</div>
   }

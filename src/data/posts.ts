@@ -1796,6 +1796,11 @@ export type TPost = Awaited<ReturnType<typeof getAllPosts>>[number] & {
   audioUrl?: string
   videoUrl?: string
   galleryImgs?: string[]
+  cover?: {
+    apiEndpoint: string
+  }
+  content?: string
+  tags?: any[]
 }
 export type TPostDetail = Awaited<ReturnType<typeof getPostByHandle>>
 export type TComment = Awaited<ReturnType<typeof getCommentsByPostId>>[number]

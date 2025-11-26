@@ -3,11 +3,11 @@ import { notFound } from 'next/navigation'
 import PackageHeader from '../PackageHeader'
 import PackageContent from '../PackageContent'
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-    const { id } = await params
+export async function generateMetadata({ params }: { params: Promise<{ id: string, locale: string }> }): Promise<Metadata> {
+    const { id, locale } = await params
 
     try {
-        const res = await fetch(`http://localhost:3000/packages/${id}`, { cache: 'no-store' })
+        const res = await fetch(`http://localhost:3000/packages/${id}?lang=${locale}`, { cache: 'no-store' })
 
         if (!res.ok) {
             return {
@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     }
 }
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-    const { id } = await params
+const Page = async ({ params }: { params: Promise<{ id: string, locale: string }> }) => {
+    const { id, locale } = await params
 
     try {
-        const res = await fetch(`http://localhost:3000/packages/${id}`, { cache: 'no-store' })
+        const res = await fetch(`http://localhost:3000/packages/${id}?lang=${locale}`, { cache: 'no-store' })
 
         if (!res.ok) {
             notFound()
