@@ -159,7 +159,11 @@
     },
     "next": "ถัดไป",
     "back": "ย้อนกลับ",
-    "confirm": "ยืนยันการจอง"
+    "confirm": "ยืนยันการจอง",
+    "totalEstimate": "ยอดรวมโดยประมาณ",
+    "nextStep": "ขั้นตอนถัดไป",
+    "confirmPayment": "ยืนยันการชำระเงิน",
+    "selectDate": "เลือกวันที่"
   },
   "contact": {
     "title": "ติดต่อเรา",
@@ -219,6 +223,41 @@
   "news": {
     "title": "ข่าวสารและบทความ",
     "subtitle": "ติดตามข่าวสารและบทความสุขภาพล่าสุด"
+  },
+  "searchModal": {
+    "placeholder": "พิมพ์เพื่อค้นหา...",
+    "recommendedSearches": "การค้นหาแนะนำ",
+    "quickActions": "การดำเนินการด่วน",
+    "noResults": "ไม่พบข้อมูลที่ตรงกัน เลือกตัวเลือกด้านบนเพื่อดูผลลัพธ์ทั้งหมด",
+    "searchFor": "ค้นหา \"{query}\"",
+    "goToSearchPage": "ไปยังหน้าค้นหา",
+    "searchAuthors": "ค้นหาผู้เขียน",
+    "searchCategories": "ค้นหาหมวดหมู่",
+    "searchTags": "ค้นหาแท็ก",
+    "packages": "แพ็กเกจ",
+    "appointment": "นัดหมาย",
+    "findSpecialist": "ค้นหาผู้เชี่ยวชาญ"
+  },
+  "searchPage": {
+    "title": "ผลการค้นหาสำหรับ {query}",
+    "description": "ผลการค้นหาสำหรับ {query}",
+    "foundResults": "เราพบ {count} ผลลัพธ์สำหรับ \"{query}\"",
+    "placeholder": "พิมพ์และกด Enter",
+    "recommendedSearches": "การค้นหาแนะนำ:",
+    "articles": "บทความ",
+    "categories": "หมวดหมู่",
+    "tags": "แท็ก",
+    "authors": "ผู้เขียน",
+    "mostRecent": "ล่าสุด",
+    "curatedByAdmin": "คัดสรรโดยแอดมิน",
+    "mostAppreciated": "ชื่นชอบมากที่สุด",
+    "mostDiscussed": "พูดถึงมากที่สุด",
+    "mostViewed": "เข้าชมมากที่สุด",
+    "mostLiked": "ถูกใจมากที่สุด"
+  },
+  "pagination": {
+    "previous": "ก่อนหน้า",
+    "next": "ถัดไป"
   }
 }
 ```

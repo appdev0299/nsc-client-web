@@ -1,6 +1,7 @@
 import React from 'react'
 import ButtonPrimary from '@/shared/ButtonPrimary'
 import ButtonSecondary from '@/shared/ButtonSecondary'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface Props {
     bookingData: any
@@ -13,6 +14,8 @@ interface Props {
 const BookingBottomBar: React.FC<Props> = ({ bookingData, currentStep, onNext, onBack, isNextDisabled }) => {
     const { selectedPackage, selectedDate, selectedTime } = bookingData
     const totalPrice = selectedPackage ? selectedPackage.price : 0
+    const locale = useLocale()
+    const t = useTranslations('booking')
 
     if (currentStep === 5) return null // Hide on success page
 
@@ -21,7 +24,7 @@ const BookingBottomBar: React.FC<Props> = ({ bookingData, currentStep, onNext, o
             <div className="mx-auto flex max-w-5xl items-center justify-between">
                 {/* Summary Info (Desktop) */}
                 <div className="hidden flex-col md:flex">
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider font-semibold">Total Estimate</span>
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400 uppercase tracking-wider font-semibold">{t('totalEstimate')}</span>
                     <div className="flex items-baseline gap-3">
                         <span className="text-2xl font-bold text-primary-600">฿{totalPrice.toLocaleString()}</span>
                         {selectedPackage && (
@@ -31,7 +34,7 @@ const BookingBottomBar: React.FC<Props> = ({ bookingData, currentStep, onNext, o
                         )}
                     </div>
                     <div className="text-xs text-neutral-500 mt-0.5">
-                        {selectedDate ? selectedDate.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Select Date'}
+                        {selectedDate ? selectedDate.toLocaleDateString(locale === 'th' ? 'th-TH' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : t('selectDate')}
                         {selectedTime && ` • ${selectedTime}`}
                     </div>
                 </div>
@@ -39,7 +42,7 @@ const BookingBottomBar: React.FC<Props> = ({ bookingData, currentStep, onNext, o
                 {/* Summary Info (Mobile) */}
                 <div className="flex flex-col md:hidden">
                     <span className="text-lg font-bold text-primary-600">฿{totalPrice.toLocaleString()}</span>
-                    <span className="text-xs text-neutral-500 line-clamp-1 max-w-[150px]">{selectedPackage?.name || 'Select Package'}</span>
+                    <span className="text-xs text-neutral-500 line-clamp-1 max-w-[150px]">{selectedPackage?.name || t('steps.selectPackage')}</span>
                 </div>
 
                 {/* Buttons */}
@@ -48,14 +51,14 @@ const BookingBottomBar: React.FC<Props> = ({ bookingData, currentStep, onNext, o
                         onClick={onBack}
                         className={`px-4 py-2 sm:px-6 ${currentStep === 1 ? 'hidden' : ''}`}
                     >
-                        Back
+                        {t('back')}
                     </ButtonSecondary>
                     <ButtonPrimary
                         onClick={onNext}
                         disabled={isNextDisabled}
                         className="px-6 py-2 sm:px-8 shadow-lg shadow-primary-600/30"
                     >
-                        {currentStep === 4 ? 'Confirm Payment' : 'Next Step'}
+                        {currentStep === 4 ? t('confirmPayment') : t('nextStep')}
                     </ButtonPrimary>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { TPost } from './posts'
+import { TPost, getPostsDefault } from './posts'
 
 function getValidImageUrl(url: string | undefined | null): string {
     const fallback = '/images/nurse-design.jpg';
@@ -49,25 +49,24 @@ export async function getPostsFromApi(locale: string = 'th'): Promise<TPost[]> {
         }
 
         const data = await res.json()
-
+        
         let items: RawPost[] = []
         if (Array.isArray(data)) {
             items = data
         } else if (data && Array.isArray(data.data)) {
             items = data.data
         } else {
-            console.error('Posts API response is not an array:', data)
-            return []
+             console.error('Posts API response is not valid:', data)
+             return []
         }
 
-        // Map the API data to ensure it matches TPost structure
         return items.map((item) => ({
             id: item.id?.toString() || Math.random().toString(),
             title: item.title || 'Untitled Post',
             handle: item.handle || item.slug || 'untitled-post',
             excerpt: item.excerpt || item.description || '',
             date: item.date || item.createdAt || new Date().toISOString(),
-            readingTime: item.readingTime || 5,
+            readingTime: item.readingTime || 0,
             commentCount: item.commentCount || 0,
             viewCount: item.viewCount || 0,
             bookmarkCount: item.bookmarkCount || 0,
@@ -78,7 +77,7 @@ export async function getPostsFromApi(locale: string = 'th'): Promise<TPost[]> {
             status: 'published',
             content: item.content || '',
             featuredImage: {
-                src: getValidImageUrl(item.featuredImage?.src || item.imageUrl),
+                src: getValidImageUrl(item.featuredImage?.src || item.imageUrl || item.coverImage),
                 alt: item.featuredImage?.alt || item.title || 'Post Image',
                 width: item.featuredImage?.width || 1920,
                 height: item.featuredImage?.height || 1080
@@ -99,7 +98,6 @@ export async function getPostsFromApi(locale: string = 'th'): Promise<TPost[]> {
             audioUrl: item.audioUrl,
             videoUrl: item.videoUrl,
             galleryImgs: item.galleryImgs || [],
-            cover: item.cover || undefined,
         }))
     } catch (error) {
         console.error('Error fetching posts from API:', error)

@@ -19,10 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     }
 }
 
-const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {
+const Page = async ({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ s?: string }> }) => {
     const { locale } = await params
+    const { s } = await searchParams
     const t = await getTranslations({ locale, namespace: 'healthKnowledge' })
-    const posts = await getPostsFromApi(locale)
+    let posts = await getPostsFromApi(locale)
+
+    if (s) {
+        posts = posts.filter((post) => post.title.toLowerCase().includes(s.toLowerCase()))
+    }
 
     const filterTabs = [
         {

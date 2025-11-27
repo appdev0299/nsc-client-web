@@ -16,9 +16,12 @@ interface Props {
   className?: string
 }
 
+import { useTranslations } from 'next-intl'
+
 function PaginationComponent({ totalPages = 10, className }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const t = useTranslations('pagination')
 
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
@@ -40,7 +43,9 @@ function PaginationComponent({ totalPages = 10, className }: Props) {
     <Pagination className={className}>
       <PaginationPrevious
         href={currentPage > 1 ? pathname + '?' + createQueryString('page', (currentPage - 1).toString()) : null}
-      />
+      >
+        {t('previous')}
+      </PaginationPrevious>
       <PaginationList>
         <PaginationPage href={pathname + '?' + createQueryString('page', '1')}>1</PaginationPage>
         <PaginationPage current href={pathname + '?' + createQueryString('page', '2')}>
@@ -55,7 +60,9 @@ function PaginationComponent({ totalPages = 10, className }: Props) {
         href={
           currentPage < totalPages ? pathname + '?' + createQueryString('page', (currentPage + 1).toString()) : null
         }
-      />
+      >
+        {t('next')}
+      </PaginationNext>
     </Pagination>
   )
 }

@@ -159,7 +159,11 @@
     },
     "next": "Next",
     "back": "Back",
-    "confirm": "Confirm Booking"
+    "confirm": "Confirm Booking",
+    "totalEstimate": "Total Estimate",
+    "nextStep": "Next Step",
+    "confirmPayment": "Confirm Payment",
+    "selectDate": "Select Date"
   },
   "contact": {
     "title": "Contact Us",
@@ -220,6 +224,41 @@
   "news": {
     "title": "News & Articles",
     "subtitle": "Stay updated with the latest health news and articles"
+  },
+  "searchModal": {
+    "placeholder": "Type to search...",
+    "recommendedSearches": "Recommended searches",
+    "quickActions": "Quick actions",
+    "noResults": "No specific posts found. Select the option above to see all results.",
+    "searchFor": "Search for \"{query}\"",
+    "goToSearchPage": "Go to search page",
+    "searchAuthors": "Search authors",
+    "searchCategories": "Search categories",
+    "searchTags": "Search tags",
+    "packages": "Packages",
+    "appointment": "Appointment",
+    "findSpecialist": "Find Specialist"
+  },
+  "searchPage": {
+    "title": "Search results for {query}",
+    "description": "Search results for {query}",
+    "foundResults": "We found {count} results for \"{query}\"",
+    "placeholder": "Type and press enter",
+    "recommendedSearches": "Recommended searches:",
+    "articles": "Articles",
+    "categories": "Categories",
+    "tags": "Tags",
+    "authors": "Authors",
+    "mostRecent": "Most recent",
+    "curatedByAdmin": "Curated by admin",
+    "mostAppreciated": "Most appreciated",
+    "mostDiscussed": "Most discussed",
+    "mostViewed": "Most viewed",
+    "mostLiked": "Most liked"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }
 ```

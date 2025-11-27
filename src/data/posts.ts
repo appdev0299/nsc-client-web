@@ -1801,6 +1801,7 @@ export type TPost = Awaited<ReturnType<typeof getAllPosts>>[number] & {
   }
   content?: string
   tags?: any[]
+  href?: string
 }
 export type TPostDetail = Awaited<ReturnType<typeof getPostByHandle>>
 export type TComment = Awaited<ReturnType<typeof getCommentsByPostId>>[number]

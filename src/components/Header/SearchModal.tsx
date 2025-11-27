@@ -1,6 +1,7 @@
 'use client'
 
-import { getAllPosts, TPost } from '@/data/posts'
+import { fetchGlobalSearchData } from '@/data/search'
+import { TPost } from '@/data/posts'
 import { Button } from '@/shared/Button'
 import ButtonCircle from '@/shared/ButtonCircle'
 import { Link } from '@/shared/link'
@@ -22,6 +23,7 @@ import _ from 'lodash'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import CategoryBadgeList from '../CategoryBadgeList'
 import LocalDate from '../LocalDate'
 import PostTypeFeaturedIcon from '../PostTypeFeaturedIcon'
@@ -33,78 +35,55 @@ interface Option {
   uri: string
 }
 
-const recommended_searches: Option[] = [
-  {
-    type: 'recommended_searches',
-    name: 'Design',
-    icon: Search01Icon,
-    uri: '/search/?s=design',
-  },
-  {
-    type: 'recommended_searches',
-    name: 'Development',
-    icon: Search01Icon,
-    uri: '/search/?s=development',
-  },
-  {
-    type: 'recommended_searches',
-    name: 'Marketing',
-    icon: Search01Icon,
-    uri: '/search/?s=marketing',
-  },
-  {
-    type: 'recommended_searches',
-    name: 'Travel',
-    icon: Search01Icon,
-    uri: '/search/?s=travel',
-  },
-]
-
-const quickActions: Option[] = [
-  {
-    type: 'quick-action',
-    name: 'Go to search page',
-    icon: Search01Icon,
-    uri: '/search/?s=',
-  },
-  {
-    type: 'quick-action',
-    name: 'Search authors',
-    icon: UserSearchIcon,
-    uri: '/search/?tab=authors&s=',
-  },
-  {
-    type: 'quick-action',
-    name: 'Search categories',
-    icon: FolderDetailsIcon,
-    uri: '/search/?tab=categories&s=',
-  },
-  {
-    type: 'quick-action',
-    name: 'Search tags',
-    icon: Tag02Icon,
-    uri: '/search/?tab=tags&s=',
-  },
-]
-
 interface Props {
   type: 'type1' | 'type2'
 }
 
 const SearchModal: FC<Props> = ({ type = 'type1' }) => {
   const router = useRouter()
+  const locale = useLocale()
+  const t = useTranslations('searchModal')
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [posts, setPosts] = useState<TPost[]>([])
 
+  const recommended_searches: Option[] = [
+    {
+      type: 'recommended_searches',
+      name: t('packages'),
+      icon: Search01Icon,
+      uri: '/packages',
+    },
+    {
+      type: 'recommended_searches',
+      name: t('appointment'),
+      icon: Search01Icon,
+      uri: '/booking',
+    },
+    {
+      type: 'recommended_searches',
+      name: t('findSpecialist'),
+      icon: Search01Icon,
+      uri: '/specialists',
+    },
+  ]
+
+
   useEffect(() => {
     const fetchPosts = async () => {
-      // for demo purposes, we're fetching all posts
-      const posts = (await getAllPosts()).slice(0, 4)
-      setPosts(posts)
+      if (!query) {
+        setPosts([])
+        return
+      }
+      const allItems = await fetchGlobalSearchData(locale)
+      const filtered = allItems.filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.excerpt?.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 5)
+      setPosts(filtered)
     }
     fetchPosts()
-  }, [query])
+  }, [query, locale])
 
   const handleSetSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value)
@@ -115,7 +94,7 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
       <>
         <div className="hidden md:block">
           <Button outline className="w-full justify-between px-4!" onClick={() => setOpen(true)}>
-            <span className="text-sm/6 font-normal text-neutral-500 dark:text-neutral-400">Type to search...</span>
+            <span className="text-sm/6 font-normal text-neutral-500 dark:text-neutral-400">{t('placeholder')}</span>
             <HugeiconsIcon icon={Search01Icon} size={24} className="ms-auto" />
           </Button>
         </div>
@@ -160,7 +139,8 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
             className="mx-auto w-full max-w-2xl transform divide-y divide-gray-100 self-end overflow-hidden bg-white shadow-2xl ring-1 ring-black/5 transition duration-300 ease-out data-closed:translate-y-10 data-closed:opacity-0 sm:self-start sm:rounded-xl dark:divide-gray-700 dark:bg-neutral-800 dark:ring-white/10"
           >
             <Combobox
-              onChange={(item: Option | TPost) => {
+              onChange={(item: Option | TPost | null) => {
+                if (!item) return
                 if ('uri' in item) {
                   if (item.type === 'recommended_searches') {
                     router.push(item.uri)
@@ -183,7 +163,7 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
                   <ComboboxInput
                     autoFocus
                     className="h-12 w-full border-0 bg-transparent ps-11 pe-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm dark:text-gray-100 dark:placeholder:text-gray-300"
-                    placeholder="Type to search..."
+                    placeholder={t('placeholder')}
                     onChange={_.debounce(handleSetSearchValue, 200)}
                     onBlur={() => setQuery('')}
                     data-autofocus
@@ -209,6 +189,39 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
                 {query !== '' && (
                   <li className="p-2">
                     <ul className="divide-y divide-gray-100 text-sm text-gray-700 dark:divide-gray-700 dark:text-gray-300">
+                      <ComboboxOption
+                        as={'li'}
+                        value={{
+                          type: 'quick-action',
+                          name: t('searchFor', { query }),
+                          icon: Search01Icon,
+                          uri: '/search?s=',
+                        } as Option}
+                        className={({ focus }) =>
+                          clsx(
+                            'flex cursor-default items-center rounded-md px-3 py-2 select-none',
+                            focus && 'bg-neutral-100 dark:bg-neutral-700'
+                          )
+                        }
+                      >
+                        {({ focus }) => (
+                          <>
+                            <HugeiconsIcon
+                              icon={Search01Icon}
+                              size={24}
+                              className={clsx('h-6 w-6 flex-none text-neutral-400 dark:text-gray-300')}
+                            />
+
+                            <span className="ms-3 flex-auto truncate">{t('searchFor', { query })}</span>
+                            {focus && (
+                              <span className="ms-3 flex-none text-neutral-500 dark:text-gray-400">
+                                <ArrowUpRightIcon className="inline-block h-4 w-4" />
+                              </span>
+                            )}
+                          </>
+                        )}
+                      </ComboboxOption>
+
                       {posts.length ? (
                         posts.map((post) => (
                           <ComboboxOption
@@ -226,8 +239,8 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
                           </ComboboxOption>
                         ))
                       ) : (
-                        <div className="py-5">
-                          <p>No posts found</p>
+                        <div className="py-5 px-3">
+                          <p>{t('noResults')}</p>
                         </div>
                       )}
                     </ul>
@@ -237,7 +250,7 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
                 {query === '' && (
                   <li className="p-2">
                     <h2 className="mt-4 mb-2 px-3 text-xs font-medium text-gray-500 dark:text-gray-300">
-                      Recommended searches
+                      {t('recommendedSearches')}
                     </h2>
 
                     <ul className="text-sm text-gray-700 dark:text-gray-300">
@@ -275,44 +288,7 @@ const SearchModal: FC<Props> = ({ type = 'type1' }) => {
                   </li>
                 )}
 
-                <li className="p-2">
-                  <h2 className="sr-only">Quick actions</h2>
-                  <ul className="text-sm text-gray-700 dark:text-gray-300">
-                    {quickActions.map((action) => (
-                      <ComboboxOption
-                        as={'li'}
-                        key={action.name}
-                        value={action}
-                        className={({ focus }) =>
-                          clsx(
-                            'flex cursor-default items-center rounded-md px-3 py-2 select-none',
-                            focus && 'bg-neutral-100 dark:bg-neutral-700'
-                          )
-                        }
-                      >
-                        {({ focus }) => (
-                          <>
-                            <HugeiconsIcon
-                              icon={action.icon}
-                              size={24}
-                              className={clsx('h-6 w-6 flex-none text-neutral-400 dark:text-gray-300')}
-                            />
 
-                            <span className="ms-3 flex-auto truncate">{action.name}</span>
-                            <span
-                              className={clsx(
-                                'ms-3 flex-none text-xs font-semibold text-neutral-400 dark:text-gray-300',
-                                focus ? '' : ''
-                              )}
-                            >
-                              <ArrowUpRightIcon className="inline-block h-4 w-4" />
-                            </span>
-                          </>
-                        )}
-                      </ComboboxOption>
-                    ))}
-                  </ul>
-                </li>
               </ComboboxOptions>
             </Combobox>
           </DialogPanel>
@@ -338,7 +314,7 @@ const CardPost = ({ post }: { post: TPost }) => {
           <CategoryBadgeList categories={categories} />
         </div>
         <h4 className="mt-2 text-sm leading-6 font-medium text-neutral-900 dark:text-neutral-300">
-          <Link className="absolute inset-0" href={`/post/${post.handle}`} />
+          <Link className="absolute inset-0" href={post.href || `/post/${post.handle}`} />
           {post.title}
         </h4>
       </div>
@@ -354,7 +330,7 @@ const CardPost = ({ post }: { post: TPost }) => {
         <span className="absolute start-1 bottom-1">
           <PostTypeFeaturedIcon wrapSize="h-7 w-7" iconSize="h-4 w-4" postType={postType} />
         </span>
-        <Link className="absolute inset-0" href={`/post/${post.handle}`} />
+        <Link className="absolute inset-0" href={post.href || `/post/${post.handle}`} />
       </div>
     </div>
   )
